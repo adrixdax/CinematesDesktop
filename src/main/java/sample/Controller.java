@@ -1,6 +1,5 @@
 package sample;
 
-import com.google.api.gax.paging.Page;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.*;
@@ -17,12 +16,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Controller {
 
@@ -41,6 +39,7 @@ public class Controller {
                 stage.show();
                 try {
                     testBigQuery();
+                    test2BigQuery();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -85,6 +84,46 @@ public class Controller {
         System.out.println("Datasets:");
         for (Dataset dataset : bigquery.listDatasets().iterateAll()) {
             System.out.printf("%s%n", dataset.getDatasetId().getDataset());
+        }
+    }
+
+    public void test2BigQuery() throws InterruptedException, IOException {
+        BigQuery bigquery = BigQueryOptions.newBuilder().setProjectId("ingsw2021")
+                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(getClass().getResource("../ingsw2021-bf069d24a538.json").getPath()))).build().getService();
+        QueryJobConfiguration queryConfig =
+                QueryJobConfiguration.newBuilder(
+                       "SELECT user_id, event_name,(SELECT value.string_value FROM UNNEST(event_params)" +
+                               "WHERE key = 'firebase_screen_class' and value.string_value=\"ToolBarActivity\") AS class," +
+                               "geo.city as city " +
+                               "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
+                               "order by event_timestamp desc;")
+                        // Use standard SQL syntax for queries.
+                        // See: https://cloud.google.com/bigquery/sql-reference/
+                        .setUseLegacySql(false)
+                        .build();
+        System.out.println(queryConfig.getQuery());
+// Create a job ID so that we can safely retry.
+        JobId jobId = JobId.of(UUID.randomUUID().toString());
+        Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
+
+// Wait for the query to complete.
+        queryJob = queryJob.waitFor();
+
+// Check for errors
+        if (queryJob == null) {
+            throw new RuntimeException("Job no longer exists");
+        } else if (queryJob.getStatus().getError() != null) {
+            // You can also look at queryJob.getStatus().getExecutionErrors() for all
+            // errors, not just the latest one.
+            throw new RuntimeException(queryJob.getStatus().getError().toString());
+        }
+        TableResult result = queryJob.getQueryResults();
+
+// Print all pages of the results.
+        for (FieldValueList row : result.iterateAll()) {
+            for (FieldValue fieldValue : row) {
+                System.out.println(fieldValue.getValue());
+            }
         }
     }
 

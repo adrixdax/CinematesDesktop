@@ -47,6 +47,11 @@
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-bigquery</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-admin</artifactId>
+            <version>directory_v1-rev4-1.15.0-rc</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -9,7 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="corretto-15" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:15.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:15.0.1" level="project" />
@@ -90,5 +90,6 @@
     <orderEntry type="library" name="Maven: com.google.api:gax:1.66.0" level="project" />
     <orderEntry type="library" name="Maven: org.threeten:threetenbp:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.7.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-admin:directory_v1-rev4-1.15.0-rc" level="project" />
   </component>
 </module>
