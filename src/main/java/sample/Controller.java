@@ -3,6 +3,8 @@ package sample;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.*;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -33,6 +35,8 @@ public class Controller {
         if (mouseEvent.getClickCount() == 1) {
             System.out.println("Ho cliccato");
             try {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("INGSW2021"));
+                System.out.println(mAuth.toString());
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
                 stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
                 stage.setScene(new Scene(root, 1280, 720));
@@ -89,13 +93,13 @@ public class Controller {
 
     public void test2BigQuery() throws InterruptedException, IOException {
         BigQuery bigquery = BigQueryOptions.newBuilder().setProjectId("ingsw2021")
-                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(getClass().getResource("../ingsw2021-bf069d24a538.json").getPath()))).build().getService();
+                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
                        "SELECT user_id, event_name,(SELECT value.string_value FROM UNNEST(event_params)" +
                                "WHERE key = 'firebase_screen_class' and value.string_value=\"ToolBarActivity\") AS class," +
                                "geo.city as city " +
-                               "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
+                               "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(2*24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
                                "order by event_timestamp desc;")
                         // Use standard SQL syntax for queries.
                         // See: https://cloud.google.com/bigquery/sql-reference/
