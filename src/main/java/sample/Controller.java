@@ -35,8 +35,8 @@ public class Controller {
         if (mouseEvent.getClickCount() == 1) {
             System.out.println("Ho cliccato");
             try {
-                FirebaseAuth mAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("INGSW2021"));
-                System.out.println(mAuth.toString());
+                //FirebaseAuth mAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("INGSW2021"));
+                //System.out.println(mAuth.toString());
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
                 stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
                 stage.setScene(new Scene(root, 1280, 720));
