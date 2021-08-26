@@ -13,16 +13,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.fluent.Content;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Controller {
 
@@ -30,27 +31,39 @@ public class Controller {
     private Parent root;
     @FXML
     public Button LoginButton;
+    /*    @FXML
+        private ... mailTextBox;
+        @FXML
+        private ... passwordTextBox;
+    */
+    private void sceneTransition(MouseEvent mouseEvent) throws IOException {
+        //FirebaseAuth mAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("INGSW2021"));
+        //System.out.println(mAuth.toString());
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
+        stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
+        stage.setScene(new Scene(root, 1280, 720));
+        stage.show();
+    }
 
     public void usernameAndPasswordLogin (MouseEvent mouseEvent){
         if (mouseEvent.getClickCount() == 1) {
             System.out.println("Ho cliccato");
             try {
-                //FirebaseAuth mAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("INGSW2021"));
-                //System.out.println(mAuth.toString());
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
-                stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
-                stage.setScene(new Scene(root, 1280, 720));
-                stage.show();
-                try {
-                    testBigQuery();
-                    test2BigQuery();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Content response = Request.Post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDfXAvSg5SCSTXUiBNjwzYxwxWp729DU5M")
+                        .bodyForm(Form.form().add("email","ironman@gmail.com").add("password", "ironman")
+                                .add("returnSecureToken", String.valueOf(true)).build())
+                        .execute().returnContent();
+                System.out.println(response.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            try {
+                testBigQuery();
+                test2BigQuery();
+                sceneTransition(mouseEvent);
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,11 +109,11 @@ public class Controller {
                 .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
-                       "SELECT user_id, event_name,(SELECT value.string_value FROM UNNEST(event_params)" +
-                               "WHERE key = 'firebase_screen_class' and value.string_value=\"ToolBarActivity\") AS class," +
-                               "geo.city as city " +
-                               "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(2*24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
-                               "order by event_timestamp desc;")
+                        "SELECT user_id, event_name,(SELECT value.string_value FROM UNNEST(event_params)" +
+                                "WHERE key = 'firebase_screen_class' and value.string_value=\"ToolBarActivity\") AS class," +
+                                "geo.city as city " +
+                                "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(2*24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
+                                "order by event_timestamp desc;")
                         // Use standard SQL syntax for queries.
                         // See: https://cloud.google.com/bigquery/sql-reference/
                         .setUseLegacySql(false)
