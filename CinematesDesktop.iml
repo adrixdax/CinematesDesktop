@@ -25,7 +25,6 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:11.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:9.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.firebase:firebase-admin:7.3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.31.4" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-gson:1.31.4" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client:1.39.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.api:api-common:1.10.4" level="project" />
@@ -96,5 +95,29 @@
     <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.7.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-admin:directory_v1-rev4-1.15.0-rc" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:fluent-hc:4.5.13" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.32.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client-jetty:1.32.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client-java6:1.32.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-drive:v3-rev20210725-1.32.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-oauth2:v2-rev65-1.17.0-rc" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-gmail:v1-rev110-1.25.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.template:soy:2021-02-01" level="project" />
+    <orderEntry type="library" name="Maven: com.google.inject:guice:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.common.html.types:types:1.0.6" level="project" />
+    <orderEntry type="library" name="Maven: com.google.jsinterop:jsinterop-annotations:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-tree:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-util:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-analysis:7.0" level="project" />
+    <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:57.1" level="project" />
+    <orderEntry type="library" name="Maven: args4j:args4j:2.0.23" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20160212" level="project" />
+    <orderEntry type="library" name="Maven: com.google.escapevelocity:escapevelocity:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-plus:v1-rev401-1.22.0" level="project" />
   </component>
 </module>

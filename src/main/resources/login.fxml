@@ -22,8 +22,9 @@
       <Font name="System Bold" size="15.0"/>
    </font>
    </Button>
-   <Button alignment="CENTER" layoutX="151.0" layoutY="405.0" mnemonicParsing="false" prefHeight="25.0"
+   <Button fx:id="googleLoginButton" alignment="CENTER" layoutX="151.0" layoutY="405.0" mnemonicParsing="false" prefHeight="25.0"
            prefWidth="149.0"
+           onMouseClicked="#googleLogin"
            style="-fx-background-color: #DB4437;" text="Accedi con Google" textAlignment="CENTER" textFill="WHITE"
            textOverrun="CLIP">
       <font>

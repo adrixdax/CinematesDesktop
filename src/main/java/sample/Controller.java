@@ -1,5 +1,18 @@
 package sample;
 
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.*;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.oauth2.Oauth2;
+import com.google.api.services.oauth2.model.Userinfoplus;
+import com.google.api.services.plus.Plus;
+import com.google.api.services.plus.PlusScopes;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.*;
@@ -14,35 +27,114 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+
+
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.google.api.client.googleapis.testing.auth.oauth2.MockGoogleCredential.ACCESS_TOKEN;
+
+
 public class Controller {
+
+    private static final String APPLICATION_NAME = "Client desktop 1";
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private static final String TOKENS_DIRECTORY_PATH = "tokens";
+    private final NetHttpTransport transport = new NetHttpTransport();
+
+    /**
+     * Global instance of the scopes required by this quickstart. If modifying
+     * these scopes, delete your previously saved tokens/ folder.
+     */
+    private static final List<String> SCOPES = Arrays.asList(DriveScopes.DRIVE_METADATA_READONLY,
+            PlusScopes.USERINFO_EMAIL,
+            PlusScopes.USERINFO_PROFILE,
+            PlusScopes.PLUS_LOGIN);
+    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     private Stage stage;
     private Parent root;
     @FXML
     public Button LoginButton;
+    @FXML
+    public Button googleLoginButton;
     /*    @FXML
         private ... mailTextBox;
         @FXML
         private ... passwordTextBox;
     */
     private void sceneTransition(MouseEvent mouseEvent) throws IOException {
-        //FirebaseAuth mAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("INGSW2021"));
-        //System.out.println(mAuth.toString());
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
         stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
         stage.setScene(new Scene(root, 1280, 720));
         stage.show();
+    }
+
+    private boolean deleteTokens(){
+        return new java.io.File("./"+TOKENS_DIRECTORY_PATH+"/StoredCredential").delete();
+    }
+
+    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+        InputStream in = Controller.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        if (in == null) {
+            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
+        }
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setAccessType("offline")
+                .build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+    }
+
+
+    public void googleLogin(MouseEvent mouseEvent) throws IOException, GeneralSecurityException {
+        if (mouseEvent.getClickCount() == 1) {
+            try {
+                Credential credential = getCredentials(transport);
+                Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), JSON_FACTORY, credential)
+                        .setApplicationName(APPLICATION_NAME).build();
+                Userinfoplus userinfo = oauth2.userinfo().get().execute();
+                System.out.println(userinfo.toPrettyString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void usernameAndPasswordLogin (MouseEvent mouseEvent){
@@ -50,7 +142,7 @@ public class Controller {
             System.out.println("Ho cliccato");
             try {
                 Content response = Request.Post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDfXAvSg5SCSTXUiBNjwzYxwxWp729DU5M")
-                        .bodyForm(Form.form().add("email","ironman@gmail.com").add("password", "ironman")
+                        .bodyForm(Form.form().add("email","ironman@gmail.com").add("password", "ironman123")
                                 .add("returnSecureToken", String.valueOf(true)).build())
                         .execute().returnContent();
                 System.out.println(response.toString());
@@ -79,25 +171,16 @@ public class Controller {
         System.out.println(dateToBigQueryFormat(new Date(System.currentTimeMillis())));
         System.out.println(dateToBigQueryFormat(System.currentTimeMillis()));
         String projectId = "ingsw2021";
-        File credentialsPath = new File(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath());
+        java.io.File credentialsPath = new java.io.File(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath());
         System.out.println(credentialsPath.getAbsolutePath());
-        // Load credentials from JSON key file. If you can't set the GOOGLE_APPLICATION_CREDENTIALS
-        // environment variable, you can explicitly load the credentials file to construct the
-        // credentials.
         GoogleCredentials credentials = null;
         try (FileInputStream serviceAccountStream = new FileInputStream(credentialsPath)) {
             credentials = ServiceAccountCredentials.fromStream(serviceAccountStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        BigQuery bigquery =
-                BigQueryOptions.newBuilder()
-                        .setCredentials(credentials)
-                        .setProjectId(projectId)
-                        .build()
-                        .getService();
-        // Use the client.
+        BigQuery bigquery = BigQueryOptions.newBuilder().setCredentials(credentials)
+                        .setProjectId(projectId).build().getService();
         System.out.println("Datasets:");
         for (Dataset dataset : bigquery.listDatasets().iterateAll()) {
             System.out.printf("%s%n", dataset.getDatasetId().getDataset());
@@ -114,29 +197,17 @@ public class Controller {
                                 "geo.city as city " +
                                 "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(2*24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
                                 "order by event_timestamp desc;")
-                        // Use standard SQL syntax for queries.
-                        // See: https://cloud.google.com/bigquery/sql-reference/
-                        .setUseLegacySql(false)
-                        .build();
+                        .setUseLegacySql(false).build();
         System.out.println(queryConfig.getQuery());
-// Create a job ID so that we can safely retry.
         JobId jobId = JobId.of(UUID.randomUUID().toString());
         Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
-
-// Wait for the query to complete.
         queryJob = queryJob.waitFor();
-
-// Check for errors
         if (queryJob == null) {
             throw new RuntimeException("Job no longer exists");
         } else if (queryJob.getStatus().getError() != null) {
-            // You can also look at queryJob.getStatus().getExecutionErrors() for all
-            // errors, not just the latest one.
             throw new RuntimeException(queryJob.getStatus().getError().toString());
         }
         TableResult result = queryJob.getQueryResults();
-
-// Print all pages of the results.
         for (FieldValueList row : result.iterateAll()) {
             for (FieldValue fieldValue : row) {
                 System.out.println(fieldValue.getValue());
