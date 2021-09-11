@@ -12,9 +12,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfoplus;
 import com.google.api.services.plus.PlusScopes;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.cloud.bigquery.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -27,12 +24,16 @@ import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 
-public class Controller {
+public class LoginController {
 
     private static final String APPLICATION_NAME = "Client desktop 1";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -49,8 +50,6 @@ public class Controller {
             PlusScopes.PLUS_LOGIN);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
-    private Stage stage;
-    private Parent root;
     @FXML
     public Button LoginButton;
     @FXML
@@ -61,8 +60,8 @@ public class Controller {
         private ... passwordTextBox;
     */
     private void sceneTransition(MouseEvent mouseEvent) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
-        stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
+        Stage stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
         stage.setScene(new Scene(root, 1280, 720));
         stage.show();
     }
@@ -72,7 +71,7 @@ public class Controller {
     }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        InputStream in = Controller.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = LoginController.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
@@ -114,69 +113,13 @@ public class Controller {
                 e.printStackTrace();
             }
             try {
-                testBigQuery();
-                test2BigQuery();
                 sceneTransition(mouseEvent);
-            } catch (InterruptedException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private String dateToBigQueryFormat(long date){
-        return new SimpleDateFormat("yyyyMMdd").format(new Date(date));
-    }
 
-    private String dateToBigQueryFormat(Date date){
-        return new SimpleDateFormat("yyyyMMdd").format(date);
-    }
-
-    public void testBigQuery() throws InterruptedException, FileNotFoundException {
-        System.out.println(dateToBigQueryFormat(new Date(System.currentTimeMillis())));
-        System.out.println(dateToBigQueryFormat(System.currentTimeMillis()));
-        String projectId = "ingsw2021";
-        java.io.File credentialsPath = new java.io.File(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath());
-        System.out.println(credentialsPath.getAbsolutePath());
-        GoogleCredentials credentials = null;
-        try (FileInputStream serviceAccountStream = new FileInputStream(credentialsPath)) {
-            credentials = ServiceAccountCredentials.fromStream(serviceAccountStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BigQuery bigquery = BigQueryOptions.newBuilder().setCredentials(credentials)
-                        .setProjectId(projectId).build().getService();
-        System.out.println("Datasets:");
-        for (Dataset dataset : bigquery.listDatasets().iterateAll()) {
-            System.out.printf("%s%n", dataset.getDatasetId().getDataset());
-        }
-    }
-
-    public void test2BigQuery() throws InterruptedException, IOException {
-        BigQuery bigquery = BigQueryOptions.newBuilder().setProjectId("ingsw2021")
-                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
-        QueryJobConfiguration queryConfig =
-                QueryJobConfiguration.newBuilder(
-                        "SELECT user_id, event_name,(SELECT value.string_value FROM UNNEST(event_params)" +
-                                "WHERE key = 'firebase_screen_class' and value.string_value=\"ToolBarActivity\") AS class," +
-                                "geo.city as city " +
-                                "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(2*24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
-                                "order by event_timestamp desc;")
-                        .setUseLegacySql(false).build();
-        System.out.println(queryConfig.getQuery());
-        JobId jobId = JobId.of(UUID.randomUUID().toString());
-        Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
-        queryJob = queryJob.waitFor();
-        if (queryJob == null) {
-            throw new RuntimeException("Job no longer exists");
-        } else if (queryJob.getStatus().getError() != null) {
-            throw new RuntimeException(queryJob.getStatus().getError().toString());
-        }
-        TableResult result = queryJob.getQueryResults();
-        for (FieldValueList row : result.iterateAll()) {
-            for (FieldValue fieldValue : row) {
-                System.out.println(fieldValue.getValue());
-            }
-        }
-    }
 
 }
