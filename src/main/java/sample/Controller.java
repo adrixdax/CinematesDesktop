@@ -1,23 +1,20 @@
 package sample;
 
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.*;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpTransport;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.gmail.Gmail;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfoplus;
-import com.google.api.services.plus.Plus;
 import com.google.api.services.plus.PlusScopes;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.*;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -26,8 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
@@ -35,37 +30,6 @@ import org.apache.http.client.fluent.Request;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-
-
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
-import com.google.api.services.drive.model.File;
-import com.google.api.services.drive.model.FileList;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static com.google.api.client.googleapis.testing.auth.oauth2.MockGoogleCredential.ACCESS_TOKEN;
 
 
 public class Controller {
@@ -79,7 +43,7 @@ public class Controller {
      * Global instance of the scopes required by this quickstart. If modifying
      * these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = Arrays.asList(DriveScopes.DRIVE_METADATA_READONLY,
+    private static final List<String> SCOPES = Arrays.asList(
             PlusScopes.USERINFO_EMAIL,
             PlusScopes.USERINFO_PROFILE,
             PlusScopes.PLUS_LOGIN);
@@ -123,7 +87,7 @@ public class Controller {
     }
 
 
-    public void googleLogin(MouseEvent mouseEvent) throws IOException, GeneralSecurityException {
+    public void googleLogin(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 1) {
             try {
                 Credential credential = getCredentials(transport);
@@ -142,7 +106,7 @@ public class Controller {
             System.out.println("Ho cliccato");
             try {
                 Content response = Request.Post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDfXAvSg5SCSTXUiBNjwzYxwxWp729DU5M")
-                        .bodyForm(Form.form().add("email","ironman@gmail.com").add("password", "ironman123")
+                        .bodyForm(Form.form().add("email","ironman@gmail.com").add("password", "ironman")
                                 .add("returnSecureToken", String.valueOf(true)).build())
                         .execute().returnContent();
                 System.out.println(response.toString());
