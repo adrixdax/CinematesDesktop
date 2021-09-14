@@ -1,73 +1,81 @@
 package sample;
 
+import component.films.Film;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import sample.retrofit.RetrofitListInterface;
+import sample.retrofit.RetrofitResponse;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ConsoleController {
+public class ConsoleController implements RetrofitListInterface {
 
     @FXML
-    private void initialize() {
+    public Label MostSeenFilmLabel;
+    @FXML
+    public ImageView MostSeenFilmImage;
+
+    private List<Film> mostReviewed = new ArrayList<>();
+    private List<Film> mostViewed = new ArrayList<>();
+    private List<Film> preferedFilms = new ArrayList<>();
+
+    @FXML
+    private synchronized void initialize() {
         getMostReviewedFilms();
+        try{
+            wait(500);
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
         getMostViewedFilms();
+        try{
+            wait(500);
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
         getPreferedFilm();
-        try {
-            BigQuery.testBigQuery();
-            BigQuery.test2BigQuery();
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
+        //try {
+        //BigQuery.testBigQuery();
+        //BigQuery.test2BigQuery();
+        //} catch (InterruptedException | IOException e) {
+        //    e.printStackTrace();
+        //}
+    }
+
+
+    private void getMostViewedFilms() {
+        RetrofitResponse.getResponse("Type=PostRequest&mostviewed=true", ConsoleController.this, "getFilm");
+    }
+
+    private void getMostReviewedFilms() {
+        RetrofitResponse.getResponse("Type=PostRequest&mostreviewed=true", ConsoleController.this, "getFilm");
+    }
+
+    private void getPreferedFilm() {
+        RetrofitResponse.getResponse("Type=PostRequest&userPrefered=true", ConsoleController.this, "getFilm");
+    }
+
+    @Override
+    public void setList(List<?> newList) {
+        if (mostReviewed.size() == 0) {
+            mostReviewed = (List<Film>) newList;
+        } else if (mostViewed.size() == 0) {
+            mostViewed = (List<Film>) newList;
+            Platform.runLater(() ->{
+                MostSeenFilmLabel.setText(mostViewed.get(0).getFilm_Title()+"\n Visto da : "+mostViewed.get(0).getCounter()+(mostViewed.get(0).getCounter() == 0 ? " utente" : " utenti"));
+                System.out.println(mostViewed.get(0).getPosterPath());
+                MostSeenFilmImage.setImage(new Image(mostViewed.get(0).getPosterPath()));
+            });
+        } else {
+            preferedFilms = (List<Film>) newList;
         }
     }
-
-
-    private String executeQuery(Form values) throws IOException {
-        String serverLink = "http://cinematesdevelopment.duckdns.org:8080/film";
-        return Request.Post(serverLink).bodyForm(values.build()).execute().returnContent().toString();
-    }
-
-    private void getMostViewedFilms(){
-        new Thread(() -> {
-            String response= null;
-            try {
-                response = executeQuery(Form.form().add("Type","PostRequest")
-                        .add("mostviewed", String.valueOf(true)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(response);
-        }).start();
-    }
-
-    private void getMostReviewedFilms(){
-        new Thread(() -> {
-            String response= null;
-            try {
-                response = executeQuery(Form.form().add("Type","PostRequest")
-                        .add("mostreviewed", String.valueOf(true)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(response);
-        }).start();
-
-    }
-
-    private void getPreferedFilm(){
-        new Thread(() -> {
-            String response= null;
-            try {
-                response = executeQuery(Form.form().add("Type","PostRequest")
-                        .add("userPrefered", String.valueOf(true)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(response);
-        }).start();
-
-    }
-
 }
 
 
