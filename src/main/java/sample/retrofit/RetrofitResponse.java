@@ -33,6 +33,8 @@ public class RetrofitResponse {
                             Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class, Object.class);
                             //noinspection JavaReflectionInvocation
                             methodClassCalled.invoke(c, response.body(), toGlide);
+                        }else if (response.body() instanceof Integer) {
+                            System.out.println(response.body());
                         }
                     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                         e.printStackTrace();

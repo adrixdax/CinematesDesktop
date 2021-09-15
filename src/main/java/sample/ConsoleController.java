@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import sample.retrofit.RetrofitListInterface;
 import sample.retrofit.RetrofitResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +41,17 @@ public class ConsoleController implements RetrofitListInterface {
             ex.printStackTrace();
         }
         getPreferedFilm();
-        //try {
-        //BigQuery.testBigQuery();
-        //BigQuery.test2BigQuery();
-        //} catch (InterruptedException | IOException e) {
-        //    e.printStackTrace();
-        //}
+        try{
+            wait(500);
+        }catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+        getOnlineUsers();
+        try {
+        BigQuery.getDeviceList();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -59,6 +65,10 @@ public class ConsoleController implements RetrofitListInterface {
 
     private void getPreferedFilm() {
         RetrofitResponse.getResponse("Type=PostRequest&userPrefered=true", ConsoleController.this, "getFilm");
+    }
+
+    private void getOnlineUsers() {
+        RetrofitResponse.getResponse("true", ConsoleController.this, "getOnlineUsers");
     }
 
     @Override

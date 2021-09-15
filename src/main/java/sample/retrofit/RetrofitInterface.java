@@ -29,4 +29,7 @@ public interface RetrofitInterface {
     @POST("/review")
     Call<List<Reviews>> getReview(@Body String body);
 
+    @GET("/online")
+    Call<Integer> getOnlineUsers(@Query("getOnlineUsers") String value);
+
 }

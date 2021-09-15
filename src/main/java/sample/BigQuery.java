@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+import static com.sun.javafx.scene.control.skin.Utils.getResource;
+
 public class BigQuery {
 
     private static String dateToBigQueryFormat(long date){
@@ -66,6 +68,53 @@ public class BigQuery {
                                                 "geo.city as city " +
                                                 "FROM `ingsw2021.analytics_260600984.events_"+dateToBigQueryFormat(System.currentTimeMillis()-(2*24 * 60 * 60 * 1000))+"` WHERE event_name=\"user_engagement\" and geo.city is not null " +
                                                 "order by event_timestamp desc;")
+                                .setUseLegacySql(false).build();
+                System.out.println(queryConfig.getQuery());
+                JobId jobId = JobId.of(UUID.randomUUID().toString());
+                Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
+                try {
+                    queryJob = queryJob.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (queryJob == null) {
+                    throw new RuntimeException("Job no longer exists");
+                } else if (queryJob.getStatus().getError() != null) {
+                    throw new RuntimeException(queryJob.getStatus().getError().toString());
+                }
+                TableResult result = null;
+                try {
+                    result = queryJob.getQueryResults();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                assert result != null;
+                for (FieldValueList row : result.iterateAll()) {
+                    for (FieldValue fieldValue : row) {
+                        System.out.println(fieldValue.getValue());
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void getDeviceList() throws InterruptedException, IOException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                com.google.cloud.bigquery.BigQuery bigquery = null;
+                try {
+                    bigquery = BigQueryOptions.newBuilder().setProjectId("ingsw2021")
+                            .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                QueryJobConfiguration queryConfig =
+                        QueryJobConfiguration.newBuilder(
+                                "SELECT device.mobile_marketing_name as modello , COUNT(device.mobile_marketing_name) as conta  FROM `ingsw2021.analytics_260600984.events_*`\n" +
+                                        "where device.mobile_marketing_name is not null \n" +
+                                        "group by device.mobile_marketing_name;")
                                 .setUseLegacySql(false).build();
                 System.out.println(queryConfig.getQuery());
                 JobId jobId = JobId.of(UUID.randomUUID().toString());
