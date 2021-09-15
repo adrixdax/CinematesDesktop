@@ -3,6 +3,10 @@ package sample;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.*;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,8 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
-
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 public class BigQuery {
 
@@ -23,6 +25,11 @@ public class BigQuery {
     private static String dateToBigQueryFormat(Date date){
         return new SimpleDateFormat("yyyyMMdd").format(date);
     }
+
+    @FXML
+    private static ListView DeviceList;
+
+    private static TableResult result;
 
     public static void testBigQuery() throws InterruptedException, FileNotFoundException {
         new Thread(new Runnable() {
@@ -106,7 +113,7 @@ public class BigQuery {
                 com.google.cloud.bigquery.BigQuery bigquery = null;
                 try {
                     bigquery = BigQueryOptions.newBuilder().setProjectId("ingsw2021")
-                            .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
+                            .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -129,18 +136,23 @@ public class BigQuery {
                 } else if (queryJob.getStatus().getError() != null) {
                     throw new RuntimeException(queryJob.getStatus().getError().toString());
                 }
-                TableResult result = null;
                 try {
                     result = queryJob.getQueryResults();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 assert result != null;
+                Platform.runLater(() ->{
+                    DeviceList = new ListView();
                 for (FieldValueList row : result.iterateAll()) {
+
                     for (FieldValue fieldValue : row) {
+                        DeviceList.getItems().add(fieldValue.getValue());
+
                         System.out.println(fieldValue.getValue());
                     }
                 }
+                });
             }
         }).start();
 
