@@ -101,23 +101,6 @@
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-drive:v3-rev20210725-1.32.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-oauth2:v2-rev65-1.17.0-rc" level="project" />
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-gmail:v1-rev110-1.25.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.template:soy:2021-02-01" level="project" />
-    <orderEntry type="library" name="Maven: com.google.inject:guice:4.1.0" level="project" />
-    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
-    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:4.1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.common.html.types:types:1.0.6" level="project" />
-    <orderEntry type="library" name="Maven: com.google.jsinterop:jsinterop-annotations:1.0.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm:7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-tree:7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-util:7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-analysis:7.0" level="project" />
-    <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:57.1" level="project" />
-    <orderEntry type="library" name="Maven: args4j:args4j:2.0.23" level="project" />
-    <orderEntry type="library" name="Maven: org.json:json:20160212" level="project" />
-    <orderEntry type="library" name="Maven: com.google.escapevelocity:escapevelocity:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-plus:v1-rev401-1.22.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.retrofit2:retrofit:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:3.14.9" level="project" />
@@ -126,10 +109,5 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.0-rc2" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.retrofit2:converter-jackson:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.retrofit2:converter-scalars:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: com.bitplan.gui:com.bitplan.javafx:0.0.33" level="project" />
-    <orderEntry type="library" name="Maven: com.bitplan.gui:com.bitplan.gui:0.0.15" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.14" level="project" />
-    <orderEntry type="library" name="Maven: eu.hansolo:Medusa:8.0" level="project" />
   </component>
 </module>
