@@ -26,9 +26,6 @@ public class BigQuery {
         return new SimpleDateFormat("yyyyMMdd").format(date);
     }
 
-    @FXML
-    private static ListView DeviceList;
-
     private static TableResult result;
 
     public static void testBigQuery() throws InterruptedException, FileNotFoundException {
@@ -106,56 +103,39 @@ public class BigQuery {
 
     }
 
-    public static void getDeviceList() throws InterruptedException, IOException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                com.google.cloud.bigquery.BigQuery bigquery = null;
-                try {
-                    bigquery = BigQueryOptions.newBuilder().setProjectId("ingsw2021")
-                            .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(getClass().getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                QueryJobConfiguration queryConfig =
-                        QueryJobConfiguration.newBuilder(
+    public static TableResult getDeviceList() throws InterruptedException, IOException {
+        com.google.cloud.bigquery.BigQuery bigquery = null;
+        try {
+            bigquery = BigQueryOptions.newBuilder().setProjectId("ingsw2021")
+                    .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(BigQuery.class.getResource("../ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        QueryJobConfiguration queryConfig =
+                QueryJobConfiguration.newBuilder(
                                 "SELECT device.mobile_marketing_name as modello , COUNT(device.mobile_marketing_name) as conta  FROM `ingsw2021.analytics_260600984.events_*`\n" +
                                         "where device.mobile_marketing_name is not null \n" +
-                                        "group by device.mobile_marketing_name;")
-                                .setUseLegacySql(false).build();
-                System.out.println(queryConfig.getQuery());
-                JobId jobId = JobId.of(UUID.randomUUID().toString());
-                Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
-                try {
-                    queryJob = queryJob.waitFor();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (queryJob == null) {
-                    throw new RuntimeException("Job no longer exists");
-                } else if (queryJob.getStatus().getError() != null) {
-                    throw new RuntimeException(queryJob.getStatus().getError().toString());
-                }
-                try {
-                    result = queryJob.getQueryResults();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                assert result != null;
-                Platform.runLater(() ->{
-                    DeviceList = new ListView();
-                for (FieldValueList row : result.iterateAll()) {
-
-                    for (FieldValue fieldValue : row) {
-                        DeviceList.getItems().add(fieldValue.getValue());
-
-                        System.out.println(fieldValue.getValue());
-                    }
-                }
-                });
-            }
-        }).start();
-
+                                        "group by device.mobile_marketing_name order by conta desc;")
+                        .setUseLegacySql(false).build();
+        JobId jobId = JobId.of(UUID.randomUUID().toString());
+        Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
+        try {
+            queryJob = queryJob.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (queryJob == null) {
+            throw new RuntimeException("Job no longer exists");
+        } else if (queryJob.getStatus().getError() != null) {
+            throw new RuntimeException(queryJob.getStatus().getError().toString());
+        }
+        try {
+            result = queryJob.getQueryResults();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assert result != null;
+        return result;
     }
 
 }
