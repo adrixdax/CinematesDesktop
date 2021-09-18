@@ -21,6 +21,8 @@ public class ConsoleController implements RetrofitListInterface {
     @FXML
     public Label MostSeenFilmLabel;
     @FXML
+    public Label onlineUsersLabel;
+    @FXML
     public ImageView MostSeenFilmImage;
     @FXML
     public Label MostReviewedFilmLabel;
@@ -32,30 +34,34 @@ public class ConsoleController implements RetrofitListInterface {
     public ImageView PreferedFilmImage;
     @FXML
     private ListView<String> DeviceList;
+    @FXML
+    private ListView<String> regions;
 
     private List<Film> mostReviewed = new ArrayList<>();
     private List<Film> mostViewed = new ArrayList<>();
     private List<Film> preferedFilms = new ArrayList<>();
+    private String onlineUsers = new String();
+
 
     @FXML
     private synchronized void initialize() {
         getMostReviewedFilms();
         try{
-            wait(350);
+            wait(500);
         }
         catch (InterruptedException ex){
             ex.printStackTrace();
         }
         getMostViewedFilms();
         try{
-            wait(350);
+            wait(500);
         }
         catch (InterruptedException ex){
             ex.printStackTrace();
         }
         getPreferedFilm();
         try{
-            wait(350);
+            wait(500);
         }catch (InterruptedException ex){
             ex.printStackTrace();
         }
@@ -68,24 +74,53 @@ public class ConsoleController implements RetrofitListInterface {
                 e.printStackTrace();
             }
         }).start();
+        try{
+            wait(500);
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+        getOnlineUsers();
+
+        new Thread(() -> {
+            try {
+                TableResult tr = BigQuery.getRegions();
+                for (FieldValueList row : tr.iterateAll())
+                    regions.getItems().addAll(row.get(0).getStringValue()+", "+row.get(1).getStringValue());
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        new Thread(() -> {
+            try {
+                TableResult tr = BigQuery.getCrashReport();
+                //for (FieldValueList row : tr.iterateAll())
+                    //regions.getItems().addAll(row.get(0).getStringValue()+", "+row.get(1).getStringValue());
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
 
     private void getMostViewedFilms() {
-        new Thread(() -> RetrofitResponse.getResponse("Type=PostRequest&mostviewed=true", ConsoleController.this, "getFilm")).start();
+        RetrofitResponse.getResponse("Type=PostRequest&mostviewed=true", ConsoleController.this, "getFilm");
     }
 
     private void getMostReviewedFilms() {
-        new Thread(() -> RetrofitResponse.getResponse("Type=PostRequest&mostreviewed=true", ConsoleController.this, "getFilm")).start();
+        RetrofitResponse.getResponse("Type=PostRequest&mostreviewed=true", ConsoleController.this, "getFilm");
     }
 
     private void getPreferedFilm() {
-        new Thread(() -> RetrofitResponse.getResponse("Type=PostRequest&userPrefered=true", ConsoleController.this, "getFilm")).start();
+        RetrofitResponse.getResponse("Type=PostRequest&userPrefered=true", ConsoleController.this, "getFilm");
     }
 
     private void getOnlineUsers() {
         RetrofitResponse.getResponse("true", ConsoleController.this, "getOnlineUsers");
     }
+
 
     @Override
     public void setList(List<?> newList) {
@@ -101,12 +136,20 @@ public class ConsoleController implements RetrofitListInterface {
                 MostSeenFilmLabel.setText(mostViewed.get(0).getFilm_Title()+"\nVisto da: "+mostViewed.get(0).getCounter()+(mostViewed.get(0).getCounter() == 1 ? " utente" : " utenti"));
                 MostSeenFilmImage.setImage(new Image(mostViewed.get(0).getPosterPath()));
             });
-        } else {
+        } else if(preferedFilms.size() == 0){
             preferedFilms = (List<Film>) newList;
             Platform.runLater(() ->{
                 PreferedFilmLabel.setText(preferedFilms.get(0).getFilm_Title()+"\nIl preferito di: "+preferedFilms.get(0).getCounter()+(preferedFilms.get(0).getCounter() == 1 ? " utente" : " utenti"));
                 PreferedFilmImage.setImage(new Image(preferedFilms.get(0).getPosterPath()));
             });
         }
+
+    }
+
+    public void setOnlineUsers(Integer onlineUsers) {
+        this.onlineUsers = String.valueOf(onlineUsers);
+        Platform.runLater(()->{
+            onlineUsersLabel.setText(this.onlineUsers);
+        });
     }
 }

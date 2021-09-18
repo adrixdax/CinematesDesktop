@@ -30,11 +30,12 @@ public class RetrofitResponse {
                         } else if (response.body() instanceof String) {
                             System.out.println(response.body());
                         } else if (response.body() instanceof Boolean && toGlide != null) {
-                            Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class, Object.class);
+                            //Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class, Object.class);
                             //noinspection JavaReflectionInvocation
-                            methodClassCalled.invoke(c, response.body(), toGlide);
+                            //methodClassCalled.invoke(c, response.body(), toGlide);
                         }else if (response.body() instanceof Integer) {
-                            System.out.println(response.body());
+                            Method methodClassCalled = c.getClass().getMethod("setOnlineUsers", Integer.class);
+                            methodClassCalled.invoke(c, response.body());
                         }
                     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                         e.printStackTrace();
