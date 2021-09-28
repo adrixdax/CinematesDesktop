@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleController implements RetrofitListInterface {
+public class ConsoleController {
 
     @FXML
     public Label MostSeenFilmLabel;
@@ -37,34 +37,74 @@ public class ConsoleController implements RetrofitListInterface {
     @FXML
     private ListView<String> regions;
 
-    private List<Film> mostReviewed = new ArrayList<>();
-    private List<Film> mostViewed = new ArrayList<>();
-    private List<Film> preferedFilms = new ArrayList<>();
-    private String onlineUsers = new String();
+    public class mostReviewedClass implements RetrofitListInterface{
+        private List<Film> mostReviewed = new ArrayList<>();
+        private void getMostReviewedFilms() {
+            RetrofitResponse.getResponse("Type=PostRequest&mostreviewed=true", mostReviewedClass.this, "getFilm");
+        }
+
+        @Override
+        public void setList(List<?> newList) {
+            if (mostReviewed.size() == 0) {
+                mostReviewed = (List<Film>) newList;
+                Platform.runLater(() -> {
+                    MostReviewedFilmLabel.setText(mostReviewed.get(0).getFilm_Title() + "\nRecensito da: " + mostReviewed.get(0).getCounter() + (mostReviewed.get(0).getCounter() == 1 ? " utente" : " utenti"));
+                    MostReviewedFilmImage.setImage(new Image(mostReviewed.get(0).getPosterPath()));
+                });
+            }
+        }
+    }
+
+    public class mostViewedClass implements RetrofitListInterface {
+        private List<Film> mostViewed = new ArrayList<>();
+
+        private void getMostViewedFilms() {
+            RetrofitResponse.getResponse("Type=PostRequest&mostviewed=true", mostViewedClass.this, "getFilm");
+        }
+
+        @Override
+        public void setList(List<?> newList) {
+            if (mostViewed.size() == 0) {
+                mostViewed = (List<Film>) newList;
+                Platform.runLater(() -> {
+                    MostSeenFilmLabel.setText(mostViewed.get(0).getFilm_Title() + "\nVisto da: " + mostViewed.get(0).getCounter() + (mostViewed.get(0).getCounter() == 1 ? " utente" : " utenti"));
+                    MostSeenFilmImage.setImage(new Image(mostViewed.get(0).getPosterPath()));
+                });
+            }
+        }
+    }
+
+    public class preferedFilmClass implements RetrofitListInterface {
+        private List<Film> preferedFilms = new ArrayList<>();
+
+        private void getPreferedFilm() {
+            RetrofitResponse.getResponse("Type=PostRequest&userPrefered=true", preferedFilmClass.this, "getFilm");
+        }
+
+        @Override
+        public void setList(List<?> newList) {
+            if(preferedFilms.size() == 0){
+                preferedFilms = (List<Film>) newList;
+                Platform.runLater(() ->{
+                    PreferedFilmLabel.setText(preferedFilms.get(0).getFilm_Title()+"\nIl preferito di: "+preferedFilms.get(0).getCounter()+(preferedFilms.get(0).getCounter() == 1 ? " utente" : " utenti"));
+                    PreferedFilmImage.setImage(new Image(preferedFilms.get(0).getPosterPath()));
+                });
+            }
+        }
+    }
+
+    private final mostReviewedClass mostReviewed = new mostReviewedClass();
+    private final mostViewedClass mostViewed = new mostViewedClass();
+    private final preferedFilmClass preferedFilm = new preferedFilmClass();
+
+    private String onlineUsers = "";
 
 
     @FXML
     private synchronized void initialize() {
-        getMostReviewedFilms();
-        try{
-            wait(500);
-        }
-        catch (InterruptedException ex){
-            ex.printStackTrace();
-        }
-        getMostViewedFilms();
-        try{
-            wait(500);
-        }
-        catch (InterruptedException ex){
-            ex.printStackTrace();
-        }
-        getPreferedFilm();
-        try{
-            wait(500);
-        }catch (InterruptedException ex){
-            ex.printStackTrace();
-        }
+        mostReviewed.getMostReviewedFilms();
+        mostViewed.getMostViewedFilms();
+        preferedFilm.getPreferedFilm();
         new Thread(() -> {
             try {
                 TableResult tr = BigQuery.getDeviceList();
@@ -74,14 +114,7 @@ public class ConsoleController implements RetrofitListInterface {
                 e.printStackTrace();
             }
         }).start();
-        try{
-            wait(500);
-        }
-        catch (InterruptedException ex){
-            ex.printStackTrace();
-        }
         getOnlineUsers();
-
         new Thread(() -> {
             try {
                 TableResult tr = BigQuery.getRegions();
@@ -91,7 +124,6 @@ public class ConsoleController implements RetrofitListInterface {
                 e.printStackTrace();
             }
         }).start();
-
         new Thread(() -> {
             try {
                 TableResult tr = BigQuery.getCrashReport();
@@ -105,46 +137,24 @@ public class ConsoleController implements RetrofitListInterface {
     }
 
 
-    private void getMostViewedFilms() {
-        RetrofitResponse.getResponse("Type=PostRequest&mostviewed=true", ConsoleController.this, "getFilm");
-    }
-
-    private void getMostReviewedFilms() {
-        RetrofitResponse.getResponse("Type=PostRequest&mostreviewed=true", ConsoleController.this, "getFilm");
-    }
-
-    private void getPreferedFilm() {
-        RetrofitResponse.getResponse("Type=PostRequest&userPrefered=true", ConsoleController.this, "getFilm");
-    }
-
     private void getOnlineUsers() {
-        RetrofitResponse.getResponse("true", ConsoleController.this, "getOnlineUsers");
+
+        new Thread(new Runnable() {
+            @Override
+            public synchronized void run() {
+                while (true){
+                    RetrofitResponse.getResponse("true", ConsoleController.this, "getOnlineUsers");
+                    try{
+                        wait(5000);
+                    }
+                    catch (InterruptedException ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
-
-    @Override
-    public void setList(List<?> newList) {
-        if (mostReviewed.size() == 0) {
-            mostReviewed = (List<Film>) newList;
-            Platform.runLater(() ->{
-                MostReviewedFilmLabel.setText(mostReviewed.get(0).getFilm_Title()+"\nRecensito da: "+mostReviewed.get(0).getCounter()+(mostReviewed.get(0).getCounter() == 1 ? " utente" : " utenti"));
-                MostReviewedFilmImage.setImage(new Image(mostReviewed.get(0).getPosterPath()));
-            });
-        } else if (mostViewed.size() == 0) {
-            mostViewed = (List<Film>) newList;
-            Platform.runLater(() ->{
-                MostSeenFilmLabel.setText(mostViewed.get(0).getFilm_Title()+"\nVisto da: "+mostViewed.get(0).getCounter()+(mostViewed.get(0).getCounter() == 1 ? " utente" : " utenti"));
-                MostSeenFilmImage.setImage(new Image(mostViewed.get(0).getPosterPath()));
-            });
-        } else if(preferedFilms.size() == 0){
-            preferedFilms = (List<Film>) newList;
-            Platform.runLater(() ->{
-                PreferedFilmLabel.setText(preferedFilms.get(0).getFilm_Title()+"\nIl preferito di: "+preferedFilms.get(0).getCounter()+(preferedFilms.get(0).getCounter() == 1 ? " utente" : " utenti"));
-                PreferedFilmImage.setImage(new Image(preferedFilms.get(0).getPosterPath()));
-            });
-        }
-
-    }
 
     public void setOnlineUsers(Integer onlineUsers) {
         this.onlineUsers = String.valueOf(onlineUsers);

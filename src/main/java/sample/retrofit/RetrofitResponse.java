@@ -23,23 +23,28 @@ public class RetrofitResponse {
             call.enqueue(new Callback<type>() {
                 @Override
                 public void onResponse(@NotNull Call<type> call, @NotNull Response<type> response) {
-                    try {
-                        if (response.body() instanceof List) {
-                            Method methodClassCalled = c.getClass().getMethod("setList", List.class);
-                            methodClassCalled.invoke(c, response.body());
-                        } else if (response.body() instanceof String) {
-                            System.out.println(response.body());
-                        } else if (response.body() instanceof Boolean && toGlide != null) {
-                            //Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class, Object.class);
-                            //noinspection JavaReflectionInvocation
-                            //methodClassCalled.invoke(c, response.body(), toGlide);
-                        }else if (response.body() instanceof Integer) {
-                            Method methodClassCalled = c.getClass().getMethod("setOnlineUsers", Integer.class);
-                            methodClassCalled.invoke(c, response.body());
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if (response.body() instanceof List) {
+                                    Method methodClassCalled = c.getClass().getMethod("setList", List.class);
+                                    methodClassCalled.invoke(c, response.body());
+                                } else if (response.body() instanceof String) {
+                                    System.out.println(response.body());
+                                } else if (response.body() instanceof Boolean && toGlide != null) {
+                                    //Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class, Object.class);
+                                    //noinspection JavaReflectionInvocation
+                                    //methodClassCalled.invoke(c, response.body(), toGlide);
+                                }else if (response.body() instanceof Integer) {
+                                    Method methodClassCalled = c.getClass().getMethod("setOnlineUsers", Integer.class);
+                                    methodClassCalled.invoke(c, response.body());
+                                }
+                            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                        e.printStackTrace();
-                    }
+                    }).start();
                 }
 
                 @Override

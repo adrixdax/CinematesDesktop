@@ -60,7 +60,7 @@ public class LoginController {
         private ... passwordTextBox;
     */
     private void sceneTransition(MouseEvent mouseEvent) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../sample.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
         Stage stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
         stage.setScene(new Scene(root, 1280, 720));
         stage.show();
@@ -97,12 +97,16 @@ public class LoginController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            try {
+                sceneTransition(mouseEvent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void usernameAndPasswordLogin (MouseEvent mouseEvent){
         if (mouseEvent.getClickCount() == 1) {
-            System.out.println("Ho cliccato");
             try {
                 Content response = Request.Post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDfXAvSg5SCSTXUiBNjwzYxwxWp729DU5M")
                         .bodyForm(Form.form().add("email","ironman@gmail.com").add("password", "ironman")
