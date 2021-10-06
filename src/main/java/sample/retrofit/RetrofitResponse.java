@@ -15,7 +15,6 @@ import retrofit2.Response;
 public class RetrofitResponse {
 
     public static <type> void getResponse(String body, Object c, String callMethod, Object toGlide) {
-        System.out.println(body);
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
         try {
             Method methodRetrofit = service.getClass().getMethod(callMethod, String.class);
