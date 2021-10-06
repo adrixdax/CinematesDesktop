@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import component.db.Report;
 
 
 public interface RetrofitInterface {
@@ -32,4 +33,9 @@ public interface RetrofitInterface {
     @GET("/online")
     Call<Integer> getOnlineUsers(@Query("getOnlineUsers") String value);
 
+    @GET("/report")
+    Call<List<Report>> getReports(@Query("getReports") String value);
+
+
 }
+

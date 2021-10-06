@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import sample.reportcomponent.ReportController;
 import sample.retrofit.RetrofitListInterface;
 import sample.retrofit.RetrofitResponse;
 
@@ -130,6 +131,16 @@ public class ConsoleController {
                 //for (FieldValueList row : tr.iterateAll())
                     //regions.getItems().addAll(row.get(0).getStringValue()+", "+row.get(1).getStringValue());
             } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        new Thread(() -> {
+            try {
+                ReportController report = new ReportController();
+                report.getReportReviews();
+                //for (FieldValueList row : tr.iterateAll())
+                //regions.getItems().addAll(row.get(0).getStringValue()+", "+row.get(1).getStringValue());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
