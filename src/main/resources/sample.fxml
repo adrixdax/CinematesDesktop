@@ -6,20 +6,19 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ConsoleController">
    <children>
-      <TitledPane prefHeight="120.0" prefWidth="252.0" text="Utenti attivi">
+       <TitledPane prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css" text="Utenti attivi">
+           <Label fx:id="onlineUsersLabel" text="onlineUsers" textFill="#1999ce" />
+       </TitledPane>
+      <TitledPane layoutY="120.0" prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css" text="Località con più traffico">
          <content>
-            <Label fx:id="onlineUsersLabel" text="onlineUsers" />
+            <ListView fx:id="regions" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
          </content></TitledPane>
-      <TitledPane layoutY="120.0" prefHeight="120.0" prefWidth="252.0" text="Località con più traffico">
+      <TitledPane layoutY="240.0" prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css" text="Dispositivi più usati">
          <content>
-            <ListView fx:id="regions" prefHeight="200.0" prefWidth="200.0" />
-         </content></TitledPane>
-      <TitledPane layoutY="240.0" prefHeight="120.0" prefWidth="252.0" text="Dispositivi più usati">
-         <content>
-            <ListView fx:id="DeviceList" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="DeviceList" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css"/>
          </content>
       </TitledPane>
-      <TitledPane layoutY="360.0" prefHeight="360.0" prefWidth="210.0" text="Film più visti">
+      <TitledPane layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film più visti">
          <content>
             <GridPane>
               <columnConstraints>
@@ -36,7 +35,7 @@
             </GridPane>
          </content>
       </TitledPane>
-      <TitledPane layoutX="210.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" text="Film più recensiti">
+      <TitledPane layoutX="210.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film più recensiti">
          <content>
              <GridPane>
                  <columnConstraints>
@@ -52,7 +51,7 @@
                  </children>
              </GridPane>
          </content></TitledPane>
-      <TitledPane layoutX="420.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" text="Film preferiti">
+      <TitledPane layoutX="420.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film preferiti">
          <content>
              <GridPane>
                  <columnConstraints>
@@ -69,7 +68,7 @@
              </GridPane>
          </content>
       </TitledPane>
-      <TitledPane layoutX="254.0" prefHeight="360.0" prefWidth="1026.0" text="Contenuti Segnalati">
+      <TitledPane layoutX="254.0" prefHeight="360.0" prefWidth="1026.0" stylesheets="titledPane.css" text="Contenuti Segnalati">
          <content>
             <GridPane>
               <columnConstraints>
@@ -92,6 +91,6 @@
             </GridPane>
          </content>
       </TitledPane>
-      <TitledPane layoutX="630.0" layoutY="360.0" prefHeight="360.0" prefWidth="650.0" text="Crash Report" />
+      <TitledPane layoutX="630.0" layoutY="360.0" prefHeight="360.0" prefWidth="650.0" text="Crash Report" stylesheets="titledPane.css"/>
    </children>
 </Pane>

@@ -2,8 +2,7 @@ package sample;
 
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.*;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,14 +11,8 @@ import java.util.UUID;
 
 public class BigQuery {
 
-    private static com.google.cloud.bigquery.BigQuery getBigQueryCredential(File file) throws IOException {
-        return BigQueryOptions.newBuilder().setProjectId("ingsw2021")
-            .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(file.getPath()))).build().getService();
-
-    }
-
     private static com.google.cloud.bigquery.BigQuery getBigQueryCredential() throws IOException {
-        return BigQueryOptions.newBuilder().setProjectId("ingsw2021").setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(Objects.requireNonNull(BigQuery.class.getResource("/ingsw2021-bf069d24a538.json")).getPath()))).build().getService();
+        return BigQueryOptions.newBuilder().setProjectId("ingsw2021").setCredentials(ServiceAccountCredentials.fromStream(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("ingsw2021-bf069d24a538.json")))).build().getService();
     }
 
     private static String dateToBigQueryFormat(long date){
@@ -58,7 +51,7 @@ public class BigQuery {
         try {
             bigquery = getBigQueryCredential();
         } catch (IOException e) {
-            bigquery = getBigQueryCredential(new File("./classes/ingsw2021-bf069d24a538.json"));
+            e.printStackTrace();
         }
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
@@ -76,7 +69,7 @@ public class BigQuery {
         try {
             bigquery = getBigQueryCredential();
         } catch (IOException e) {
-            bigquery = getBigQueryCredential(new File("./classes/ingsw2021-bf069d24a538.json"));
+            e.printStackTrace();
         }
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
@@ -91,7 +84,7 @@ public class BigQuery {
         try {
             bigquery = getBigQueryCredential();
         } catch (IOException e) {
-            bigquery = getBigQueryCredential(new File("./classes/ingsw2021-bf069d24a538.json"));
+            e.printStackTrace();
         }
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
