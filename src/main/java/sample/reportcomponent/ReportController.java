@@ -2,44 +2,74 @@ package sample.reportcomponent;
 
 import component.db.Report;
 import component.db.Reviews;
+import sample.ConsoleController;
 import sample.retrofit.RetrofitListInterface;
 import sample.retrofit.RetrofitResponse;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class ReportController implements RetrofitListInterface {
 
     private List<Report> reportReviews = new ArrayList<>();
-    private List<Reviews> reviews = new ArrayList<>();
+    private Set<Reviews> reviews = new HashSet<>();
+    private List<ReportedReviews> reportedReviews = new ArrayList<>();
+    private ConsoleController cc = null;
 
+    public ReportController(ConsoleController cc){
+        this.cc = cc;
+    }
 
     private void getReport() {
         RetrofitResponse.getResponse("true", ReportController.this, "getReports");
     }
 
     private void getReviews() {
-        for (Report report: reportReviews) {
+        for (Report report : reportReviews) {
             RetrofitResponse.getResponse(String.valueOf(report.getId_recordRef()), ReportController.this, "getSingleReview");
         }
-
     }
 
-    public void getReportReviews(){
+    private void buildList(){
+        for (Report report : reportReviews) {
+            Iterator<Reviews> it = reviews.iterator();
+            while (it.hasNext()) {
+                Reviews r = it.next();
+                if (r.getId_reviews() == report.getId_recordRef()) {
+                    cc.updateListView(new ReportedReviews(r, report));
+                    synchronized (reviews) {
+                        it.remove();
+                        reviews.notify();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    public void getReportedReviews() {
         getReport();
     }
 
 
     @Override
     public void setList(List<?> newList) {
-        if(newList.get(0) instanceof  Report) {
-            reportReviews = (List<Report>) newList;
+        if (newList.get(0) instanceof Report) {
+            if (reportReviews.size() != 0){
+                reportReviews.clear();
+            }
+            reportReviews.addAll((Collection<? extends Report>) newList);
             getReviews();
-        }else{
-            reviews.addAll((Collection<? extends Reviews>) newList);
+        } else {
+            synchronized (reviews) {
+                reviews.addAll((Collection<? extends Reviews>) newList);
+                reviews.notify();
+            }
+            try {
+                buildList();
+            }
+            catch (Exception ignored){
+
+            }
         }
-
-
     }
 }

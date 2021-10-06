@@ -9,13 +9,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import sample.reportcomponent.ReportCell;
 import sample.reportcomponent.ReportController;
+import sample.reportcomponent.ReportedReviews;
 import sample.retrofit.RetrofitListInterface;
 import sample.retrofit.RetrofitResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ConsoleController {
 
@@ -37,6 +41,8 @@ public class ConsoleController {
     private ListView<String> DeviceList;
     @FXML
     private ListView<String> regions;
+    @FXML
+    private ListView<ReportedReviews> reportedElements;
 
     public class mostReviewedClass implements RetrofitListInterface{
         private List<Film> mostReviewed = new ArrayList<>();
@@ -103,6 +109,7 @@ public class ConsoleController {
 
     @FXML
     private synchronized void initialize() {
+        ReportController reportController = new ReportController(this);
         mostReviewed.getMostReviewedFilms();
         mostViewed.getMostViewedFilms();
         preferedFilm.getPreferedFilm();
@@ -136,8 +143,8 @@ public class ConsoleController {
         }).start();
         new Thread(() -> {
             try {
-                ReportController report = new ReportController();
-                report.getReportReviews();
+                reportedElements.setCellFactory(studentListView -> new ReportCell());
+                reportController.getReportedReviews();
                 //for (FieldValueList row : tr.iterateAll())
                 //regions.getItems().addAll(row.get(0).getStringValue()+", "+row.get(1).getStringValue());
             } catch (Exception e) {
@@ -172,5 +179,11 @@ public class ConsoleController {
         Platform.runLater(()->{
             onlineUsersLabel.setText(this.onlineUsers);
         });
+    }
+
+    public void updateListView(ReportedReviews r){
+        if (!(this.reportedElements.getItems().contains(r))){
+            this.reportedElements.getItems().add(r);
+        }
     }
 }

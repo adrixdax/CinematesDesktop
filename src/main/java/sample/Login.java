@@ -16,6 +16,7 @@ public class Login extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/login.fxml")));
         primaryStage.setTitle("Cinemates Analytics");
         primaryStage.setScene(new Scene(root, 1280, 720));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

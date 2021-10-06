@@ -63,6 +63,7 @@ public class LoginController {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
         Stage stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
         stage.setScene(new Scene(root, 1280, 720));
+        stage.setResizable(false);
         stage.show();
     }
 

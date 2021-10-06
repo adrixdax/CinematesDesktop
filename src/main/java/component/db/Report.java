@@ -1,11 +1,25 @@
 package component.db;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Report {
 
+    @JsonProperty("idReport")
     private int idReport = 0;
+    @JsonProperty("id_user")
     private String id_user = "";
+    @JsonProperty("id_recordRef")
     private int id_recordRef = 0;
+    @JsonProperty("reportType")
     private String reportType = "";
+
+    public Report(@JsonProperty("idReport") int idReport, @JsonProperty("id_user") String id_user,
+                  @JsonProperty("id_recordRef")  int id_recordRef, @JsonProperty("reportType") String reportType) {
+        this.idReport = idReport;
+        this.id_user = id_user;
+        this.id_recordRef = id_recordRef;
+        this.reportType = reportType;
+    }
 
     public int getIdReport() {
         return idReport;

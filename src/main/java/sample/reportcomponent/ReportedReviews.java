@@ -1,4 +1,9 @@
-package sample.reportcomponent;public class ReportedReviews {
+package sample.reportcomponent;
+
+import component.db.Report;
+import component.db.Reviews;
+
+public class ReportedReviews {
 
     private int idReport = 0;
     private String id_user = "";
@@ -7,6 +12,16 @@ package sample.reportcomponent;public class ReportedReviews {
     private String title;
     private String description;
     private double val;
+
+    public ReportedReviews(Reviews r, Report report) {
+        this.idReport=report.getIdReport();
+        this.id_user=report.getId_user();
+        this.id_recordRef=report.getId_recordRef();
+        this.reportType=report.getReportType();
+        this.title=r.getTitle();
+        this.description=r.getDescription();
+        this.val=r.getVal();
+    }
 
     public int getIdReport() {
         return idReport;

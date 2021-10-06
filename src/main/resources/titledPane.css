@@ -44,7 +44,7 @@
 
 .titled-pane > *.content
 {
-    -fx-background-color: #2A2E37;
+    -fx-background-color: #353745;
     -fx-background-insets: 0, 0 1 2 1;
     -fx-padding: 0.2em;
     -fx-border-radius: 0.9em;

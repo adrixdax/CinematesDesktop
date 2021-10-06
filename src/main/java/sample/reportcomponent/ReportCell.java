@@ -1,6 +1,5 @@
 package sample.reportcomponent;
 
-import component.db.Report;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -35,36 +34,25 @@ public class ReportCell extends ListCell<ReportedReviews> {
 
     @Override
     protected void updateItem(ReportedReviews reportedReviews, boolean empty) {
-
-
         super.updateItem(reportedReviews, empty);
-
         if(empty || reportedReviews == null) {
-
             setText(null);
             setGraphic(null);
-
         } else {
             if (mLLoader == null) {
-                mLLoader = new FXMLLoader(getClass().getResource("/fxml/ListCell.fxml"));
+                mLLoader = new FXMLLoader(getClass().getResource("/ReportCell.fxml"));
                 mLLoader.setController(this);
-
                 try {
                     mLLoader.load();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
-
-            User.setText(String.valueOf("adriano");
+            User.setText("adriano");
             ReportType.setText(reportedReviews.getReportType());
             Reviews.setText(reportedReviews.getTitle() + "\n" + reportedReviews.getDescription());
-
-
             setText(null);
             setGraphic(gridpane);
         }
-
     }
 }
