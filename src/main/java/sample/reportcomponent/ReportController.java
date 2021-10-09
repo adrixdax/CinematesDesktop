@@ -34,7 +34,7 @@ public class ReportController implements RetrofitListInterface {
             Iterator<Reviews> it = reviews.iterator();
             while (it.hasNext()) {
                 Reviews r = it.next();
-                if (r.getId_reviews() == report.getId_recordRef()) {
+                if (r.getIdReviews() == report.getId_recordRef()) {
                     cc.updateListView(new ReportedReviews(r, report));
                     synchronized (reviews) {
                         it.remove();

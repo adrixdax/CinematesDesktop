@@ -24,8 +24,11 @@ public interface RetrofitInterface {
     @POST("/notify")
     Call<String> createNotify(@Body String body);
 
+    @POST("/report")
+    Call<String> updateReport(@Body String body);
+
     @GET("/review")
-    Call<List<Reviews>> getSingleReview(@Query("id_review") String idReview);
+    Call<List<Reviews>> getSingleReview(@Query("idReviews") String idReview);
 
     @POST("/review")
     Call<List<Reviews>> getReview(@Body String body);
@@ -35,6 +38,9 @@ public interface RetrofitInterface {
 
     @GET("/report")
     Call<List<Report>> getReports(@Query("getReports") String value);
+
+    @POST("/review")
+    Call<String> deleteReview(@Body String body);
 
 
 }

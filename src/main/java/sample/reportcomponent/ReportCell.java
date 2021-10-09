@@ -5,7 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import org.apache.http.client.fluent.Request;
+import retrofit2.Retrofit;
+import sample.retrofit.RetrofitResponse;
 
 import java.io.IOException;
 
@@ -25,10 +29,10 @@ public class ReportCell extends ListCell<ReportedReviews> {
     private GridPane gridpane;
 
     @FXML
-    private Button Remove;
+    private Button remove;
 
     @FXML
-    private Button Watch;
+    private Button visible;
 
     private FXMLLoader mLLoader;
 
@@ -48,11 +52,26 @@ public class ReportCell extends ListCell<ReportedReviews> {
                     e.printStackTrace();
                 }
             }
-            User.setText("adriano");
+            try {
+                User.setText(Request.Get("https://ingsw2021-default-rtdb.firebaseio.com/Users/"+this.getItem().getId_user()+"/nickname.json").execute().returnContent().toString().replaceAll("\"",""));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             ReportType.setText(reportedReviews.getReportType());
             Reviews.setText(reportedReviews.getTitle() + "\n" + reportedReviews.getDescription());
             setText(null);
             setGraphic(gridpane);
         }
     }
+
+    public void keepVisible(MouseEvent mouseEvent) {
+        RetrofitResponse.getResponse("Type=PostRequest&visible=true&idReport="+ (this.getItem()).getIdReport(),this,"updateReport");
+
+    }
+
+    public void removeReview(MouseEvent mouseEvent) {
+        RetrofitResponse.getResponse("Type=PostRequest&delete=true&idReviews="+ (this.getItem()).getId_recordRef(),this,"deleteReview");
+    }
+
+
 }

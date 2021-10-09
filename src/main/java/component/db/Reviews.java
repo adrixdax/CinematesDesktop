@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Reviews {
 
-    @JsonProperty("id_reviews")
-    private int id_reviews;
+    @JsonProperty("idReviews")
+    private int idReviews;
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
@@ -24,7 +24,7 @@ public class Reviews {
     private boolean obscured;
 
     @JsonCreator
-    public Reviews(@JsonProperty("id_review") int id_review,
+    public Reviews(@JsonProperty("idReviews") int id_review,
                    @JsonProperty("title") String title,
                    @JsonProperty("description") String description,
                    @JsonProperty("val") double val,
@@ -32,7 +32,7 @@ public class Reviews {
                    @JsonProperty("iduser") String iduser,
                    @JsonProperty("typeOfReview") String typeOfReview,
                    @JsonProperty("obscured") boolean obscured) {
-        this.id_reviews = id_review;
+        this.idReviews = id_review;
         this.title = title;
         this.description = description;
         this.val = val;
@@ -42,13 +42,13 @@ public class Reviews {
         this.obscured = obscured;
     }
 
-    public int getId_reviews() {
-        return id_reviews;
+    public int getIdReviews() {
+        return idReviews;
     }
 
-    @JsonSetter("id_reviews")
-    public void setId_reviews(int id_reviews) {
-        this.id_reviews = id_reviews;
+    @JsonSetter("idReviews")
+    public void setIdReviews(int idReviews) {
+        this.idReviews = idReviews;
     }
 
     public String getTitle() {

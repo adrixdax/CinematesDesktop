@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="gridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="gridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" >
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="179.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="154.0" />
@@ -17,12 +17,12 @@
    <children>
       <Label fx:id="User" text="UserReported" textFill="WHITE" GridPane.halignment="CENTER" />
       <Label fx:id="ReportType" text="ReportType" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Button fx:id="Watch" mnemonicParsing="false" text="Rendi Visibile" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+      <Button fx:id="visible" onMouseClicked="#keepVisible" mnemonicParsing="false" text="Rendi Visibile" GridPane.columnIndex="3" GridPane.halignment="CENTER">
          <GridPane.margin>
             <Insets left="150.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="Remove" mnemonicParsing="false" text="Rimuovi Recensione" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+      <Button fx:id="remove" onMouseClicked="#removeReview" mnemonicParsing="false" text="Rimuovi Recensione" GridPane.columnIndex="3" GridPane.halignment="CENTER">
          <GridPane.margin>
             <Insets right="150.0" />
          </GridPane.margin>
