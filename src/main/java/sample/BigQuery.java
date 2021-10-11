@@ -88,7 +88,7 @@ public class BigQuery {
         }
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
-                                "SELECT  issue_id,issue_title, issue_subtitle,event_timestamp, operating_system.display_version, application.display_version FROM `ingsw2021.firebase_crashlytics.*`")
+                                "SELECT issue_title, issue_subtitle,event_timestamp, operating_system.display_version, application.display_version, (select type from unnest (exceptions) as exceptionType limit 1) FROM `ingsw2021.firebase_crashlytics.*'")
                         .setUseLegacySql(false).build();
         return getTableResult(result, bigquery, queryConfig);
     }

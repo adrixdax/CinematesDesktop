@@ -1,4 +1,4 @@
-package sample.reportcomponent;
+package sample.components.reportcomponent;
 
 import component.db.Report;
 import component.db.Reviews;

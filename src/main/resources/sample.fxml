@@ -77,6 +77,10 @@
             <ListView fx:id="reportedElements" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
          </content>
       </TitledPane>
-      <TitledPane layoutX="630.0" layoutY="360.0" prefHeight="360.0" prefWidth="650.0" stylesheets="titledPane.css" text="Crash Report" />
+      <TitledPane layoutX="630.0" layoutY="360.0" prefHeight="360.0" prefWidth="650.0" stylesheets="titledPane.css" text="Crash Report">
+          <content>
+            <ListView fx:id="crashReport" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
+          </content>
+      </TitledPane>
    </children>
 </Pane>

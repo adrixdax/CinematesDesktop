@@ -1,4 +1,4 @@
-package sample.reportcomponent;
+package sample.components.reportcomponent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +8,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import org.apache.http.client.fluent.Request;
-import retrofit2.Retrofit;
 import sample.retrofit.RetrofitResponse;
 
 import java.io.IOException;

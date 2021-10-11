@@ -9,17 +9,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import sample.reportcomponent.ReportCell;
-import sample.reportcomponent.ReportController;
-import sample.reportcomponent.ReportedReviews;
+import sample.components.crashcomponent.CrashCell;
+import sample.components.crashlitycs.CrashReport;
+import sample.components.reportcomponent.ReportCell;
+import sample.components.reportcomponent.ReportController;
+import sample.components.reportcomponent.ReportedReviews;
 import sample.retrofit.RetrofitListInterface;
 import sample.retrofit.RetrofitResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ConsoleController {
 
@@ -43,6 +43,8 @@ public class ConsoleController {
     private ListView<String> regions;
     @FXML
     private ListView<ReportedReviews> reportedElements;
+    @FXML
+    private ListView<CrashReport> crashReport;
 
     public class mostReviewedClass implements RetrofitListInterface{
         private List<Film> mostReviewed = new ArrayList<>();
@@ -135,8 +137,8 @@ public class ConsoleController {
         new Thread(() -> {
             try {
                 TableResult tr = BigQuery.getCrashReport();
-                //for (FieldValueList row : tr.iterateAll())
-                    //regions.getItems().addAll(row.get(0).getStringValue()+", "+row.get(1).getStringValue());
+                for (FieldValueList row : tr.iterateAll())
+                    crashReport.setCellFactory(crashReportListView -> new CrashCell());
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
