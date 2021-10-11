@@ -10,10 +10,10 @@ import java.util.*;
 
 public class ReportController implements RetrofitListInterface {
 
-    private List<Report> reportReviews = new ArrayList<>();
-    private Set<Reviews> reviews = new HashSet<>();
-    private List<ReportedReviews> reportedReviews = new ArrayList<>();
-    private ConsoleController cc = null;
+    private final List<Report> reportReviews = new ArrayList<>();
+    private final Set<Reviews> reviews = new HashSet<>();
+    private final List<ReportedReviews> reportedReviews = new ArrayList<>();
+    private ConsoleController cc;
 
     public ReportController(ConsoleController cc){
         this.cc = cc;

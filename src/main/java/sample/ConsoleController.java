@@ -10,7 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import sample.components.crashcomponent.CrashCell;
-import sample.components.crashlitycs.CrashReport;
+import component.crashlitycs.CrashReport;
 import sample.components.reportcomponent.ReportCell;
 import sample.components.reportcomponent.ReportController;
 import sample.components.reportcomponent.ReportedReviews;
@@ -137,8 +137,9 @@ public class ConsoleController {
         new Thread(() -> {
             try {
                 TableResult tr = BigQuery.getCrashReport();
+                crashReport.setCellFactory(crashReportListView -> new CrashCell());
                 for (FieldValueList row : tr.iterateAll())
-                    crashReport.setCellFactory(crashReportListView -> new CrashCell());
+                    crashReport.getItems().add(new CrashReport(row));
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -147,8 +148,6 @@ public class ConsoleController {
             try {
                 reportedElements.setCellFactory(studentListView -> new ReportCell());
                 reportController.getReportedReviews();
-                //for (FieldValueList row : tr.iterateAll())
-                //regions.getItems().addAll(row.get(0).getStringValue()+", "+row.get(1).getStringValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -178,9 +177,7 @@ public class ConsoleController {
 
     public void setOnlineUsers(Integer onlineUsers) {
         this.onlineUsers = String.valueOf(onlineUsers);
-        Platform.runLater(()->{
-            onlineUsersLabel.setText(this.onlineUsers);
-        });
+        Platform.runLater(()-> onlineUsersLabel.setText(this.onlineUsers));
     }
 
     public void updateListView(ReportedReviews r){

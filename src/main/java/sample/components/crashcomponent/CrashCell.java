@@ -7,10 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import org.apache.http.client.fluent.Request;
-import retrofit2.Retrofit;
-import sample.components.crashlitycs.CrashReport;
-import sample.retrofit.RetrofitResponse;
+import component.crashlitycs.CrashReport;
 
 import java.io.IOException;
 

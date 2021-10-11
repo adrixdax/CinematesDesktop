@@ -1,10 +1,6 @@
-package sample.components.crashlitycs;
+package component.crashlitycs;
 
 import com.google.cloud.bigquery.FieldValueList;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
-import java.lang.reflect.Field;
 
 public class CrashReport {
 

@@ -60,6 +60,7 @@ public class BigQuery {
                                         where device.mobile_marketing_name is not null\s
                                         group by device.mobile_marketing_name order by conta desc;""")
                         .setUseLegacySql(false).build();
+        assert bigquery != null;
         return getTableResult(result, bigquery, queryConfig);
     }
 
@@ -75,6 +76,7 @@ public class BigQuery {
                 QueryJobConfiguration.newBuilder(
                                 "SELECT geo.country,geo.region FROM `ingsw2021.analytics_260600984.events_*` group by geo.region,geo.country order by count(geo.region) desc")
                         .setUseLegacySql(false).build();
+        assert bigquery != null;
         return getTableResult(result, bigquery, queryConfig);
     }
 
@@ -88,8 +90,9 @@ public class BigQuery {
         }
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
-                                "SELECT issue_title, issue_subtitle,event_timestamp, operating_system.display_version, application.display_version, (select type from unnest (exceptions) as exceptionType limit 1) FROM `ingsw2021.firebase_crashlytics.*'")
+                                "SELECT issue_title, issue_subtitle,event_timestamp, operating_system.display_version, application.display_version, (select type from unnest (exceptions) as exceptionType limit 1) FROM `ingsw2021.firebase_crashlytics.*`")
                         .setUseLegacySql(false).build();
+        assert bigquery != null;
         return getTableResult(result, bigquery, queryConfig);
     }
 
