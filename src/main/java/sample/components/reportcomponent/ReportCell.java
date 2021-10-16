@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import org.apache.http.client.fluent.Request;
 import sample.retrofit.RetrofitResponse;
 
+import javax.swing.text.Element;
 import java.io.IOException;
 
 public class ReportCell extends ListCell<ReportedReviews> {
@@ -65,11 +66,12 @@ public class ReportCell extends ListCell<ReportedReviews> {
 
     public void keepVisible(MouseEvent mouseEvent) {
         RetrofitResponse.getResponse("Type=PostRequest&visible=true&idReport="+ (this.getItem()).getIdReport(),this,"updateReport");
-
+        this.updateItem(this.getItem(),true);
     }
 
     public void removeReview(MouseEvent mouseEvent) {
         RetrofitResponse.getResponse("Type=PostRequest&delete=true&idReviews="+ (this.getItem()).getId_recordRef(),this,"deleteReview");
+        this.updateItem(this.getItem(),true);
     }
 
 

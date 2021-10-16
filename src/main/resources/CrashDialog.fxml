@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="500.0" minWidth="800.0" stylesheets="dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.crashlitycs.CrashDialogController">
+   <children>
+      <Label layoutX="20.0" layoutY="40.0" text="ISSUE SUBTITLE:" textFill="#1999ce" />
+      <Label layoutX="20.0" layoutY="100.0" text="EVENT TIMESTAMP:" textFill="#1999ce" />
+      <Label layoutX="20.0" layoutY="160.0" text="OPERATING SYSTEM.DISPLAY VERSION:" textFill="#1999ce" />
+      <Label layoutX="20.0" layoutY="220.0" text="APPLICATION.DISPLAY VERSION:" textFill="#1999ce" />
+      <Label fx:id="subtitle" layoutX="20.0" layoutY="70.0" text=" ISSUE SUBTITLE:" textFill="white" />
+      <Label fx:id="timestamp" layoutX="20.0" layoutY="130.0" text="EVENT TIMESTAMP:" textFill="white" />
+      <Label fx:id="osDisplay" layoutX="20.0" layoutY="190.0" text="OPERATING SYSTEM.DISPLAY VERSION:" textFill="white" />
+      <Label fx:id="appDisplay" layoutX="20.0" layoutY="250.0" text="APPLICATION.DISPLAY VERSION:" textFill="white" />
+   </children>
+</AnchorPane>
+
