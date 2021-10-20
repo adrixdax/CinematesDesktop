@@ -12,22 +12,22 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:15" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:linux:15" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-web:15" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:linux:15" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:win:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:15" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:linux:15" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:15" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:linux:15" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:15" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:linux:15" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-media:15" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:linux:15" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:15" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:linux:15" level="project" />
-    <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:9.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.firebase:firebase-admin:7.3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-gson:1.31.4" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:win:15" level="project" />
+    <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:9.0.10" level="project" />
+    <orderEntry type="library" name="Maven: com.google.firebase:firebase-admin:8.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-gson:1.32.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client:1.39.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.api:api-common:1.10.4" level="project" />
     <orderEntry type="library" name="Maven: com.google.auto.value:auto-value-annotations:1.8.1" level="project" />
@@ -54,14 +54,14 @@
     <orderEntry type="library" name="Maven: org.conscrypt:conscrypt-openjdk-uber:2.5.1" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.39.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:30.1.1-android" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.63.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.63.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.63.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.63.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.63.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.63.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.63.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.67.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.67.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.67.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.67.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.67.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.67.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.67.Final" level="project" />
     <orderEntry type="library" name="Maven: com.google.cloud:google-cloud-bigquery:1.135.3" level="project" />
     <orderEntry type="library" name="Maven: com.google.cloud:google-cloud-core:1.95.4" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java-util:3.17.3" level="project" />
@@ -95,22 +95,22 @@
     <orderEntry type="library" name="Maven: com.google.api:gax:1.66.0" level="project" />
     <orderEntry type="library" name="Maven: org.threeten:threetenbp:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.7.1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-admin:directory_v1-rev4-1.15.0-rc" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-admin:email_migration_v2-rev29-1.21.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:fluent-hc:4.5.13" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.32.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client-jetty:1.32.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client-java6:1.32.1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-drive:v3-rev20210725-1.32.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-oauth2:v2-rev65-1.17.0-rc" level="project" />
-    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-gmail:v1-rev110-1.25.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-plus:v1-rev401-1.22.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-gmail:v1-rev20210614-1.32.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-plus:v1-rev20190328-1.30.10" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.retrofit2:retrofit:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:3.14.9" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.17.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.0-rc2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.0-rc2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.retrofit2:converter-jackson:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.retrofit2:converter-scalars:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: de.jensd:fontawesomefx:8.9" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20210307" level="project" />
   </component>
 </module>

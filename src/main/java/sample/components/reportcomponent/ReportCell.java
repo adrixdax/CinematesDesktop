@@ -2,6 +2,7 @@ package sample.components.reportcomponent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -54,11 +55,22 @@ public class ReportCell extends ListCell<ReportedReviews> {
             }
             try {
                 User.setText(Request.Get("https://ingsw2021-default-rtdb.firebaseio.com/Users/"+this.getItem().getId_user()+"/nickname.json").execute().returnContent().toString().replaceAll("\"",""));
+                User.setAlignment(Pos.CENTER);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            ReportType.setText(reportedReviews.getReportType());
+            ReportType.setText(reportedReviews.getReportType().replace('_',' ').replace(':','\n').replaceFirst("ALLO","ALL'"));
+            ReportType.setAlignment(Pos.CENTER);
+            /*
+                        listofdata.add(ReportType.LIGUAGGIO_OFFENSIVO.toString().replace('_', ' '));
+            listofdata.add(ReportType.DISCRIMINAZIONE.toString().replace('_', ' '));
+            listofdata.add(ReportType.INCITAZIONE_ALLO_ODIO.toString().replace('_', ' ').replaceFirst("ALLO", "ALL'"));
+            listofdata.add(ReportType.RECENSIONE_PRIVA_DI_SENSO.toString().replace('_', ' '));
+            listofdata.add(ReportType.BLASFEMIA.toString().replace('_', ' '));
+            listofdata.add(ReportType.SPAM.toString().replace('_', ' '));
+             */
             Reviews.setText(reportedReviews.getTitle() + "\n" + reportedReviews.getDescription());
+            Reviews.setAlignment(Pos.CENTER);
             setText(null);
             setGraphic(gridpane);
         }

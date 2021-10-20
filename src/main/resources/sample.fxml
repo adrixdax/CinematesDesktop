@@ -7,7 +7,16 @@
 
 <Pane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ConsoleController">
    <children>
-       <TitledPane prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css" text="Utenti attivi">
+      <MenuBar prefWidth="1280.0" stylesheets="menuBar.css">
+        <menus>
+          <Menu mnemonicParsing="false" text="Amministrazione">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Aggiungi amministratore" onAction="#addAdminDialog" style="-fx-border-width: 0"/>
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+       <TitledPane layoutY="25.0" prefHeight="95.0" prefWidth="252.0" stylesheets="titledPane.css" text="Utenti attivi">
            <Label fx:id="onlineUsersLabel" text="onlineUsers" textFill="#1999ce">
             <font>
                <Font name="System Bold" size="32.0" />
@@ -72,7 +81,7 @@
              </GridPane>
          </content>
       </TitledPane>
-      <TitledPane layoutX="254.0" prefHeight="360.0" prefWidth="1026.0" stylesheets="titledPane.css" text="Contenuti Segnalati">
+      <TitledPane layoutY="25.0" layoutX="254.0" prefHeight="335.0" prefWidth="1026.0" stylesheets="titledPane.css" text="Contenuti Segnalati">
          <content>
             <ListView fx:id="reportedElements" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
          </content>

@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0"
-            prefWidth="1280.0" style="-fx-background-color: #181717;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #181717;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <AnchorPane prefHeight="50.0" prefWidth="1280.0" style="-fx-background-color: #1999ce;">
       <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="14.0" layoutY="15.0">
       </ImageView>
    </AnchorPane>
-   <Button fx:id="LoginButton"
-           onMouseClicked="#usernameAndPasswordLogin"
-           style="-fx-background-color: #1999ce;" text="Login"
-           textAlignment="RIGHT" textFill="WHITE"
-           alignment="CENTER" layoutX="501.0"
-           layoutY="507.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0"
-   >
+   <Button fx:id="LoginButton" alignment="CENTER" layoutX="500.0" layoutY="507.0" mnemonicParsing="false" onMouseClicked="#usernameAndPasswordLogin" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #1999ce;" text="Login" textAlignment="RIGHT" textFill="WHITE">
    <font>
-      <Font name="System Bold" size="15.0"/>
+      <Font name="System Bold" size="15.0" />
    </font>
    </Button>
-   <Button fx:id="googleLoginButton"
-           onMouseClicked="#googleLogin"
-           alignment="CENTER" layoutX="501.0" layoutY="466.0"
-           mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0"
-           style="-fx-background-color: #DB4437;" text="Accedi con Google" textAlignment="RIGHT"
-           textFill="WHITE" textOverrun="CLIP">>
+   <Button fx:id="googleLoginButton" alignment="CENTER" layoutX="500.0" layoutY="466.0" mnemonicParsing="false" onMouseClicked="#googleLogin" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #DB4437;" text="Accedi con Google" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">>
       <font>
-         <Font name="System Bold" size="12.0"/>
+         <Font name="System Bold" size="12.0" />
       </font>
       <graphic>
          <ImageView fitHeight="18.0" fitWidth="18.0">
@@ -39,21 +26,18 @@
          </ImageView>
       </graphic>
    </Button>
-   <JFXTextField focusColor="#1999ce" layoutX="502.0" layoutY="312.0"
-                 prefHeight="26.0" prefWidth="135.0" promptText="Username"
-                 unFocusColor="WHITE">
+   <JFXTextField fx:id="eMail" focusColor="#1999ce" layoutX="463.0" layoutY="312.0" prefHeight="26.0" prefWidth="225.0" promptText="Username" unFocusColor="WHITE">
       <font>
-         <Font size="15.0" />
+         <Font name="System Bold" size="15.0" />
       </font>
    </JFXTextField>
    <ImageView layoutX="274.0" layoutY="206.0">
    </ImageView>
    <ImageView layoutX="283.0" layoutY="278.0">
    </ImageView>
-   <JFXPasswordField focusColor="#1999ce" layoutX="502.0" layoutY="384.0"
-                     prefHeight="30.0" prefWidth="135.0" promptText="Password" unFocusColor="WHITE">
+   <JFXPasswordField fx:id="password" focusColor="#1999ce" layoutX="463.0" layoutY="384.0" prefHeight="30.0" prefWidth="225.0" promptText="Password" unFocusColor="WHITE">
       <font>
-         <Font size="15.0" />
+         <Font name="System Bold" size="15.0" />
       </font>
    </JFXPasswordField>
 </AnchorPane>

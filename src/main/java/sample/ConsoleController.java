@@ -2,15 +2,16 @@ package sample;
 
 import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.TableResult;
+import component.crashlitycs.CrashReport;
 import component.films.Film;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import sample.components.crashcomponent.CrashCell;
-import component.crashlitycs.CrashReport;
 import sample.components.reportcomponent.ReportCell;
 import sample.components.reportcomponent.ReportController;
 import sample.components.reportcomponent.ReportedReviews;
@@ -185,4 +186,9 @@ public class ConsoleController {
             this.reportedElements.getItems().add(r);
         }
     }
+
+    public void addAdminDialog(Event event) {
+        System.out.println("Ho cliccato");
+    }
+
 }

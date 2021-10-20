@@ -10,8 +10,11 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.oauth2.Oauth2;
+import com.google.api.services.oauth2.model.Tokeninfo;
 import com.google.api.services.oauth2.model.Userinfoplus;
 import com.google.api.services.plus.PlusScopes;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,6 +26,7 @@ import javafx.stage.Stage;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -51,14 +55,21 @@ public class LoginController {
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     @FXML
+    private JFXTextField eMail;
+    @FXML
+    private JFXPasswordField password;
+
+    @FXML
     public Button LoginButton;
     @FXML
     public Button googleLoginButton;
-    /*    @FXML
-        private ... mailTextBox;
-        @FXML
-        private ... passwordTextBox;
-    */
+
+    @FXML
+    private void initialize(){
+        eMail.setStyle("-fx-text-fill:#1999CE");
+        password.setStyle("-fx-text-fill:#1999CE");
+    }
+
     private void sceneTransition(MouseEvent mouseEvent) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
         Stage stage = (Stage) (((Node) mouseEvent.getSource()).getScene().getWindow());
@@ -94,13 +105,17 @@ public class LoginController {
                 Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), JSON_FACTORY, credential)
                         .setApplicationName(APPLICATION_NAME).build();
                 Userinfoplus userinfo = oauth2.userinfo().get().execute();
-                System.out.println(userinfo.toPrettyString());
+                if (Boolean.parseBoolean(Request.Get("https://ingsw2021-default-rtdb.firebaseio.com/Users/"+new JSONObject(userinfo.toPrettyString()).get("id").toString()+"/isAdmin.json").execute().returnContent().toString().replaceAll("\"",""))) {
+                    try {
+                        sceneTransition(mouseEvent);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    //pop up non sei admin
+                }
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                sceneTransition(mouseEvent);
-            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -110,17 +125,22 @@ public class LoginController {
         if (mouseEvent.getClickCount() == 1) {
             try {
                 Content response = Request.Post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDfXAvSg5SCSTXUiBNjwzYxwxWp729DU5M")
-                        .bodyForm(Form.form().add("email","ironman@gmail.com").add("password", "ironman")
+                        .bodyForm(Form.form().add("email",eMail.getText()).add("password", password.getText())
                                 .add("returnSecureToken", String.valueOf(true)).build())
                         .execute().returnContent();
-                System.out.println(response.toString());
+                if (Boolean.parseBoolean(Request.Get("https://ingsw2021-default-rtdb.firebaseio.com/Users/"+new JSONObject(response.toString()).get("localId").toString()+"/isAdmin.json").execute().returnContent().toString())) {
+                    try {
+                        sceneTransition(mouseEvent);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    //pop up non sei admin
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-            try {
-                sceneTransition(mouseEvent);
-            } catch (IOException e) {
-                e.printStackTrace();
+                //pop up -> non sei nessuno
             }
         }
     }
