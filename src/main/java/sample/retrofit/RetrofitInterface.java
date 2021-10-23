@@ -42,6 +42,8 @@ public interface RetrofitInterface {
     @POST("/review")
     Call<String> deleteReview(@Body String body);
 
+    @GET("/user")
+    Call<String> makeAdmin(@Query("user") String value);
 
 }
 

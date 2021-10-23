@@ -2,10 +2,16 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<Pane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddAdmin">
+<Pane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddAdmin">
    <children>
-      <Button mnemonicParsing="false" text="Button" layoutY="450.0" layoutX="375.0" onMouseClicked="#queryByEmail"/>
+      <Button fx:id="makeAdmin" layoutX="236.0" layoutY="218.0" mnemonicParsing="false" onMouseClicked="#queryByEmail" text="Rendi amministratore" />
+      <TextField fx:id="textField" layoutX="61.0" layoutY="74.0" prefHeight="40.0" prefWidth="479.0" />
+      <Label layoutX="60.0" layoutY="35.0" text="Inserisci la mail o il nickname dell'utente da rendere amministratore">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

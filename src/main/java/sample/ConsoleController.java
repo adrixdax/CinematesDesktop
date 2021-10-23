@@ -201,7 +201,7 @@ public class ConsoleController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene = new Scene(parent, 800, 500);
+        Scene scene = new Scene(parent, 600, 300);
         Stage stage = new Stage();
         stage.setTitle("Boh");
         stage.initModality(Modality.APPLICATION_MODAL);
