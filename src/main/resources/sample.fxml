@@ -5,91 +5,83 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ConsoleController">
-   <children>
-      <MenuBar prefWidth="1280.0" stylesheets="menuBar.css">
-        <menus>
-          <Menu mnemonicParsing="false" text="Amministrazione">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Aggiungi amministratore" onAction="#addAdminDialog" style="-fx-border-width: 0"/>
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-       <TitledPane layoutY="25.0" prefHeight="95.0" prefWidth="252.0" stylesheets="titledPane.css" text="Utenti attivi">
-           <Label fx:id="onlineUsersLabel" text="onlineUsers" textFill="#1999ce">
-            <font>
-               <Font name="System Bold" size="32.0" />
-            </font></Label>
-       </TitledPane>
-      <TitledPane layoutY="120.0" prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css" text="Località con più traffico">
-         <content>
-            <ListView fx:id="regions" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
-         </content></TitledPane>
-      <TitledPane layoutY="240.0" prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css" text="Dispositivi più usati">
-         <content>
-            <ListView fx:id="DeviceList" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
-         </content>
-      </TitledPane>
-      <TitledPane layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film più visti">
-         <content>
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="266.0" minHeight="10.0" prefHeight="245.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label fx:id="MostSeenFilmLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="188.0" text="MostSeenFilm" textFill="WHITE" />
-                   <ImageView fx:id="MostSeenFilmImage" fitHeight="250.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-               </children>
-            </GridPane>
-         </content>
-      </TitledPane>
-      <TitledPane layoutX="210.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film più recensiti">
-         <content>
-             <GridPane>
-                 <columnConstraints>
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 </columnConstraints>
-                 <rowConstraints>
-                     <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
-                     <RowConstraints maxHeight="266.0" minHeight="10.0" prefHeight="245.0" vgrow="SOMETIMES" />
-                 </rowConstraints>
-                 <children>
-                     <Label fx:id="MostReviewedFilmLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="188.0" text="MostReviewedFilm" textFill="WHITE" />
-                     <ImageView fx:id="MostReviewedFilmImage" fitHeight="250.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                 </children>
-             </GridPane>
-         </content></TitledPane>
-      <TitledPane layoutX="420.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film preferiti">
-         <content>
-             <GridPane>
-                 <columnConstraints>
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 </columnConstraints>
-                 <rowConstraints>
-                     <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
-                     <RowConstraints maxHeight="266.0" minHeight="10.0" prefHeight="245.0" vgrow="SOMETIMES" />
-                 </rowConstraints>
-                 <children>
-                     <Label fx:id="PreferedFilmLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="188.0" text="PreferedFilms" textFill="WHITE" />
-                     <ImageView fx:id="PreferedFilmImage" fitHeight="250.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                 </children>
-             </GridPane>
-         </content>
-      </TitledPane>
-      <TitledPane layoutY="25.0" layoutX="254.0" prefHeight="335.0" prefWidth="1026.0" stylesheets="titledPane.css" text="Contenuti Segnalati">
-         <content>
-            <ListView fx:id="reportedElements" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
-         </content>
-      </TitledPane>
-      <TitledPane layoutX="630.0" layoutY="360.0" prefHeight="360.0" prefWidth="650.0" stylesheets="titledPane.css" text="Crash Report">
-          <content>
-            <ListView fx:id="crashReport" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css" />
-          </content>
-      </TitledPane>
-   </children>
+<Pane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0"
+      stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="sample.ConsoleController">
+    <MenuBar prefWidth="1280.0" stylesheets="menuBar.css">
+        <Menu mnemonicParsing="false" text="Amministrazione">
+            <MenuItem mnemonicParsing="false" text="Aggiungi amministratore" onAction="#addAdminDialog"
+                      style="-fx-border-width: 0"/>
+        </Menu>
+    </MenuBar>
+    <TitledPane layoutY="25.0" prefHeight="95.0" prefWidth="252.0" stylesheets="titledPane.css" text="Utenti attivi">
+        <Label fx:id="onlineUsersLabel" text="onlineUsers" textFill="#1999ce">
+         <font>
+             <Font name="System Bold" size="32.0"/>
+         </font>
+        </Label>
+    </TitledPane>
+    <TitledPane layoutY="120.0" prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css"
+                text="Località con più traffico">
+        <ListView fx:id="regions" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css"/>
+    </TitledPane>
+    <TitledPane layoutY="240.0" prefHeight="120.0" prefWidth="252.0" stylesheets="titledPane.css"
+                text="Dispositivi più usati">
+        <ListView fx:id="DeviceList" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css"/>
+    </TitledPane>
+    <TitledPane layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film più visti">
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="266.0" minHeight="10.0" prefHeight="245.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Label fx:id="MostSeenFilmLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0"
+                   prefWidth="188.0" text="MostSeenFilm" textFill="WHITE"/>
+            <ImageView fx:id="MostSeenFilmImage" fitHeight="250.0" fitWidth="190.0" pickOnBounds="true"
+                       preserveRatio="true" GridPane.rowIndex="1"/>
+        </GridPane>
+    </TitledPane>
+    <TitledPane layoutX="210.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css"
+                text="Film più recensiti">
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="266.0" minHeight="10.0" prefHeight="245.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Label fx:id="MostReviewedFilmLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0"
+                   prefWidth="188.0" text="MostReviewedFilm" textFill="WHITE"/>
+            <ImageView fx:id="MostReviewedFilmImage" fitHeight="250.0" fitWidth="190.0" pickOnBounds="true"
+                       preserveRatio="true" GridPane.rowIndex="1"/>
+        </GridPane>
+    </TitledPane>
+    <TitledPane layoutX="420.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css"
+                text="Film preferiti">
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="266.0" minHeight="10.0" prefHeight="245.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Label fx:id="PreferedFilmLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0"
+                   prefWidth="188.0" text="PreferedFilms" textFill="WHITE"/>
+            <ImageView fx:id="PreferedFilmImage" fitHeight="250.0" fitWidth="190.0" pickOnBounds="true"
+                       preserveRatio="true" GridPane.rowIndex="1"/>
+        </GridPane>
+    </TitledPane>
+    <TitledPane layoutY="25.0" layoutX="254.0" prefHeight="335.0" prefWidth="1026.0" stylesheets="titledPane.css"
+                text="Contenuti Segnalati">
+        <ListView fx:id="reportedElements" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css"/>
+    </TitledPane>
+    <TitledPane layoutX="630.0" layoutY="360.0" prefHeight="360.0" prefWidth="650.0" stylesheets="titledPane.css"
+                text="Crash Report">
+        <ListView fx:id="crashReport" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css"/>
+    </TitledPane>
 </Pane>
