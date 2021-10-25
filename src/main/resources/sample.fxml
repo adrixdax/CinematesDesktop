@@ -29,7 +29,7 @@
                 text="Dispositivi più usati">
         <ListView fx:id="DeviceList" prefHeight="200.0" prefWidth="200.0" stylesheets="listCell.css"/>
     </TitledPane>
-    <TitledPane layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film più visti">
+    <TitledPane layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css" text="Film più visto">
         <GridPane>
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -45,7 +45,7 @@
         </GridPane>
     </TitledPane>
     <TitledPane layoutX="210.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css"
-                text="Film più recensiti">
+                text="Film più recensito">
         <GridPane>
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -61,7 +61,7 @@
         </GridPane>
     </TitledPane>
     <TitledPane layoutX="420.0" layoutY="360.0" prefHeight="360.0" prefWidth="210.0" stylesheets="titledPane.css"
-                text="Film preferiti">
+                text="Film preferito">
         <GridPane>
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>

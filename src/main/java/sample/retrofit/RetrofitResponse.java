@@ -30,6 +30,12 @@ public class RetrofitResponse {
                                     Method methodClassCalled = c.getClass().getMethod("setList", List.class);
                                     methodClassCalled.invoke(c, response.body());
                                 } else if (response.body() instanceof String) {
+                                    try {
+                                        Method methodClassCalled = c.getClass().getMethod("setResponse", String.class);
+                                        methodClassCalled.invoke(c, response.body());
+                                    }catch (Exception ex){
+                                        ex.printStackTrace();
+                                    }
                                     System.out.println(response.body());
                                 } else if (response.body() instanceof Boolean && toGlide != null) {
                                     //Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class, Object.class);

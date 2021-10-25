@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="gridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="gridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="129.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="196.0" />
@@ -21,7 +21,11 @@
          <font>
             <Font size="10.0" />
          </font></Label>
-       <Label fx:id="Reviews" prefHeight="95.0" prefWidth="325.0" text="Reviews" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" wrapText="true"/>
+       <ScrollPane prefWidth="330.0" stylesheets="titledPane.css" GridPane.columnIndex="2">
+              <content>
+                  <Label fx:id="Reviews" prefWidth="309.0" text="Reviews" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+              </content>
+       </ScrollPane>
       <Button fx:id="visible" mnemonicParsing="false" onMouseClicked="#keepVisible" text="Rimuovi segnalazione" GridPane.columnIndex="3" GridPane.halignment="CENTER">
          <GridPane.margin>
             <Insets left="150.0" />

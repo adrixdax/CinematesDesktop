@@ -54,3 +54,12 @@
 {
     -fx-background-color: white;
 }
+
+.scroll-pane{
+   -fx-padding: 0;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: #353745;
+
+}

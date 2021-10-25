@@ -203,7 +203,7 @@ public class ConsoleController {
         }
         Scene scene = new Scene(parent, 600, 300);
         Stage stage = new Stage();
-        stage.setTitle("Boh");
+        stage.setTitle("Aggiunta nuovo Admin");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setResizable(false);
