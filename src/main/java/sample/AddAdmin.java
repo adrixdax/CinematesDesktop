@@ -21,22 +21,18 @@ public class AddAdmin  {
     }
 
     public void setResponse(String response) {
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                Alert alert= null;
-                if(response.equals("Utente non trovato")){
-                     alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Attenzione!");
-
-                }else{
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle(textField.getText() + " è stato aggiunto come admin!");
-                }
-                alert.setHeaderText(response);
-                Optional<ButtonType> result = alert.showAndWait();
-                alert.close();
+        Platform.runLater(() -> {
+            Alert alert= null;
+            if(response.equals("Utente non trovato")){
+                 alert = new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Attenzione!");
+            }else{
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(textField.getText() + " è stato aggiunto come admin!");
             }
+            alert.setHeaderText(response);
+            Optional<ButtonType> result = alert.showAndWait();
+            alert.close();
         });
 
     }

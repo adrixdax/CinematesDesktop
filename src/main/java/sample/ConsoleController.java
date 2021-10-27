@@ -151,12 +151,19 @@ public class ConsoleController {
                 e.printStackTrace();
             }
         }).start();
-        new Thread(() -> {
-            try {
-                reportedElements.setCellFactory(studentListView -> new ReportCell());
-                reportController.getReportedReviews();
-            } catch (Exception e) {
-                e.printStackTrace();
+        new Thread(new Runnable() {
+            @Override
+            public synchronized void run() {
+                try {
+                    reportedElements.setCellFactory(studentListView -> new ReportCell());
+                    while (true) {
+                        reportController.getReportedReviews();
+                        wait(60*1000);
+                        Platform.runLater(() -> reportedElements.getItems().clear());
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
 
@@ -189,7 +196,7 @@ public class ConsoleController {
 
     public void updateListView(ReportedReviews r){
         if (!(this.reportedElements.getItems().contains(r))){
-            this.reportedElements.getItems().add(r);
+            Platform.runLater(() -> ConsoleController.this.reportedElements.getItems().add(r));
         }
     }
 

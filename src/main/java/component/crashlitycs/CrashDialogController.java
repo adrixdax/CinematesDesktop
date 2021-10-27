@@ -11,14 +11,11 @@ public class CrashDialogController {
     private Label subtitle,osDisplay,timestamp,appDisplay;
 
     public void setLabels(CrashReport crashReport){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                subtitle.setText(crashReport.getIssueSubtitle());
-                osDisplay.setText(crashReport.getOperatingSystemDisplayVersion());
-                timestamp.setText(crashReport.getEventTimestamp());
-                appDisplay.setText(crashReport.getApplicationDisplayVersion());
-            }
+        Platform.runLater(() -> {
+            subtitle.setText(crashReport.getIssueSubtitle());
+            osDisplay.setText(crashReport.getOperatingSystemDisplayVersion());
+            timestamp.setText(crashReport.getEventTimestamp());
+            appDisplay.setText(crashReport.getApplicationDisplayVersion());
         });
 
     }

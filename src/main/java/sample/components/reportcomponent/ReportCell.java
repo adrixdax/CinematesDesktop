@@ -61,14 +61,6 @@ public class ReportCell extends ListCell<ReportedReviews> {
             }
             ReportType.setText(reportedReviews.getReportType().replace('_',' ').replace(':','\n').replaceFirst("ALLO","ALL'"));
             ReportType.setAlignment(Pos.CENTER);
-            /*
-                        listofdata.add(ReportType.LIGUAGGIO_OFFENSIVO.toString().replace('_', ' '));
-            listofdata.add(ReportType.DISCRIMINAZIONE.toString().replace('_', ' '));
-            listofdata.add(ReportType.INCITAZIONE_ALLO_ODIO.toString().replace('_', ' ').replaceFirst("ALLO", "ALL'"));
-            listofdata.add(ReportType.RECENSIONE_PRIVA_DI_SENSO.toString().replace('_', ' '));
-            listofdata.add(ReportType.BLASFEMIA.toString().replace('_', ' '));
-            listofdata.add(ReportType.SPAM.toString().replace('_', ' '));
-             */
             Reviews.setText(reportedReviews.getTitle() + "\n" + reportedReviews.getDescription());
             Reviews.setAlignment(Pos.CENTER);
             setText(null);

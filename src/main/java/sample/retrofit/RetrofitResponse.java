@@ -33,8 +33,7 @@ public class RetrofitResponse {
                                     try {
                                         Method methodClassCalled = c.getClass().getMethod("setResponse", String.class);
                                         methodClassCalled.invoke(c, response.body());
-                                    }catch (Exception ex){
-                                        ex.printStackTrace();
+                                    }catch (Exception ignored){
                                     }
                                     System.out.println(response.body());
                                 } else if (response.body() instanceof Boolean && toGlide != null) {

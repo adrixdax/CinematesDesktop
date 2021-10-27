@@ -15,12 +15,15 @@ import com.google.api.services.oauth2.model.Userinfoplus;
 import com.google.api.services.plus.PlusScopes;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.http.client.fluent.Content;
@@ -35,6 +38,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 public class LoginController {
@@ -97,6 +101,16 @@ public class LoginController {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
+    private void showAlert(){
+        Platform.runLater(() -> {
+            Alert alert=new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Attenzione!");
+            alert.setHeaderText("Non sei un admin");
+            Optional<ButtonType> result = alert.showAndWait();
+            alert.close();
+        });
+    }
+
 
     public void googleLogin(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 1) {
@@ -113,7 +127,7 @@ public class LoginController {
                     }
                 }
                 else {
-                    //pop up non sei admin
+                    showAlert();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -136,7 +150,7 @@ public class LoginController {
                     }
                 }
                 else {
-                    //pop up non sei admin
+                    showAlert();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
