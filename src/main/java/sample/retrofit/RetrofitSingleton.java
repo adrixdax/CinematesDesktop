@@ -5,7 +5,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitSingleton {
 
-    private final static String url = "http://cinematesdevelopment.duckdns.org:8080";
+    private final static String url = "http://aboutactingapes.ddns.net:8080";
     private static retrofit2.Retrofit retrofit;
 
     public static retrofit2.Retrofit getRetrofit() {

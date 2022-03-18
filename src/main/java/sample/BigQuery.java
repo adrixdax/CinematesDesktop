@@ -46,8 +46,8 @@ public class BigQuery {
     }
 
     public static TableResult getDeviceList() throws InterruptedException, IOException {
-        TableResult result = null;
         com.google.cloud.bigquery.BigQuery bigquery = null;
+        TableResult result = null;
         try {
             bigquery = getBigQueryCredential();
         } catch (IOException e) {
